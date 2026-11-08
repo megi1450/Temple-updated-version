@@ -101,6 +101,8 @@
     const hide=()=>{overlay.classList.remove('is-visible');overlay.setAttribute('aria-hidden','true');};
     const button=(el,message='Working...')=>{if(!el||el.dataset.loadingActive==='true')return;el.dataset.loadingActive='true';el.setAttribute('aria-busy','true');el.dataset.originalLoadingText=el.innerHTML;el.innerHTML='<span class="temple-button-spinner" aria-hidden="true"></span>'+message;hideTimer=setTimeout(()=>{el.innerHTML=el.dataset.originalLoadingText||el.innerHTML;el.dataset.loadingActive='false';el.removeAttribute('aria-busy');delete el.dataset.originalLoadingText;},18000);};
     window.TempleLoading={show,hide,button};
+    show('Loading temple services...');
+    if(document.readyState==='complete')hide();else window.addEventListener('load',hide,{once:true});
     document.addEventListener('click',event=>{
       const link=event.target.closest('a[href]');
       if(link&&!event.defaultPrevented&&!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey&&(!link.target||link.target==='_self')&&!link.hasAttribute('download')){
