@@ -129,7 +129,7 @@
         }
     </style>
 <link href="redesign.css" rel="stylesheet"/></head>
-<body data-area="admin" data-page="flatsort.html" onload="admin()">
+<body data-area="admin" data-page="flatsort.html">
 <h1>Flat Number Search</h1>
 <div style="display: flex;">
 <button class="admin-nav-button" onclick="window.location.href='adminhome.html'">Home</button>
@@ -153,14 +153,8 @@
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
         import { getFirestore, doc, collection, getDoc, getDocs } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBKtqm0KzMmX4cCqT3PhGI2aFcF3LSXnEk",
-            authDomain: "ao-temple.firebaseapp.com",
-            projectId: "ao-temple",
-            storageBucket: "ao-temple.appspot.com",
-            messagingSenderId: "426167530682",
-            appId: "1:426167530682:web:848a4cb0ceee2ce05cfe83"
-        };
+        const firebaseConfig = window.TEMPLE_FIREBASE_CONFIG;
+if (!firebaseConfig || firebaseConfig.projectId === 'YOUR_STAGING_PROJECT_ID') throw new Error('Configure staging Firebase first.');
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
@@ -172,8 +166,8 @@
             const filter = document.getElementById('filter').value;
             const resultsDiv = document.getElementById('results');
             const summaryDiv = document.getElementById('summary');
-            resultsDiv.innerHTML = ''; // Clear previous results
-            summaryDiv.innerHTML = ''; // Clear previous summary
+            resultsDiv.replaceChildren();
+            summaryDiv.replaceChildren();
             searchResults = []; // Clear previous search results
 
             if (!flatNumberInput) {
@@ -182,7 +176,8 @@
             }
 
             // Normalizing the flat number input to handle different formatting
-            flatNumberInput = flatNumberInput.replace(/<\/?i>/g, '').toUpperCase(); // Remove italic tags if present
+            flatNumberInput = flatNumberInput.replace(/\s+/g, '').toUpperCase();
+            if (!/^([A-F])?(00[1-4]|0?[1-9]0[1-4]|1[0-9]0[1-4])$/.test(flatNumberInput)) { alert('Enter a valid flat number, for example A1404.'); return; }
 
             let residentCount = 0;
             let registrationCount = 0;
@@ -193,11 +188,11 @@
                 const flatDocSnapshot = await getDoc(flatDocRef);
 
                 if (!flatDocSnapshot.exists()) {
-                    resultsDiv.innerHTML = `<p>No data found for Flat Number: ${flatNumberInput}.</p>`;
+                    const empty = document.createElement('p'); empty.textContent = `No data found for Flat Number: ${flatNumberInput}.`; resultsDiv.append(empty);
                     return;
                 }
 
-                resultsDiv.innerHTML = `<h2>Details for Flat: ${flatNumberInput}</h2>`;
+                const heading = document.createElement('h2'); heading.textContent = `Details for Flat: ${flatNumberInput}`; resultsDiv.append(heading);
 
                 // Fetch and display residents
                 if (filter === 'all' || filter === 'residents') {
@@ -213,14 +208,12 @@
                     residentsData.sort((a, b) => new Date(b.signInTime) - new Date(a.signInTime));
 
                     residentsData.forEach((data) => {
-                        const residentHTML = `
-                            <div class="result">
-                                <p><strong>Resident Name:</strong> ${data.name}</p>
-                                <p><strong>Email:</strong> ${data.email}</p>
-                                <p><strong>Created:</strong> ${data.signInTime}</p>
-                            </div>
-                        `;
-                        resultsDiv.insertAdjacentHTML('beforeend', residentHTML);
+                        const card = document.createElement('div'); card.className = 'result';
+                        [['Resident Name', data.name], ['Email', data.email], ['Created', data.signInTime || data.createdAt]].forEach(([label, value]) => {
+                            const row = document.createElement('p'), strong = document.createElement('strong');
+                            strong.textContent = label + ': '; row.append(strong, document.createTextNode(String(value || ''))); card.append(row);
+                        });
+                        resultsDiv.append(card);
                         searchResults.push({
                             'Resident Name': data.name,
                             'Email': data.email,
@@ -241,14 +234,12 @@
                     });
 
                     registrationsData.forEach((data) => {
-                        const registrationHTML = `
-                            <div class="result">
-                                <p><strong>Registration Name:</strong> ${data.name}</p>
-                                <p><strong>Event:</strong> ${data.event}</p>
-                                <p><strong>Time:</strong> ${data.time}</p>
-                            </div>
-                        `;
-                        resultsDiv.insertAdjacentHTML('beforeend', registrationHTML);
+                        const card = document.createElement('div'); card.className = 'result';
+                        [['Registration Name', data.name], ['Event', data.event], ['Time', data.time || data.date]].forEach(([label, value]) => {
+                            const row = document.createElement('p'), strong = document.createElement('strong');
+                            strong.textContent = label + ': '; row.append(strong, document.createTextNode(String(value || ''))); card.append(row);
+                        });
+                        resultsDiv.append(card);
                         searchResults.push({
                             'Registration Name': data.name,
                             'Event': data.event,
@@ -259,11 +250,13 @@
                 }
 
                 // Show summary
-                summaryDiv.innerHTML = `<strong>Total Residents:</strong> ${residentCount} <strong>Total Registrations:</strong> ${registrationCount}`;
+                const residentsLabel = document.createElement('strong'); residentsLabel.textContent = 'Total Residents: ';
+                const registrationsLabel = document.createElement('strong'); registrationsLabel.textContent = ' Total Registrations: ';
+                summaryDiv.replaceChildren(residentsLabel, document.createTextNode(String(residentCount)), registrationsLabel, document.createTextNode(String(registrationCount)));
 
             } catch (error) {
                 console.error('Error fetching data:', error);
-                resultsDiv.innerHTML = '<p>Error fetching data. Please try again.</p>';
+                const errorMessage = document.createElement('p'); errorMessage.textContent = 'Error fetching data. Please try again.'; resultsDiv.append(errorMessage);
             }
         });
 
@@ -281,6 +274,8 @@
             loading.style.visibility = 'visible';
         });
     </script>
-<script src="site-shell.js"></script></body>
-<script src="admin.js"></script>
+<script src="firebase-config.js"></script>
+<script src="site-shell.js"></script>
+<script type="module" src="admin-guard.js"></script></body>
+
 </html>

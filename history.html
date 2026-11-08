@@ -200,107 +200,25 @@
 </div>
 </footer>
 <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
-        import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBKtqm0KzMmX4cCqT3PhGI2aFcF3LSXnEk",
-            authDomain: "ao-temple.firebaseapp.com",
-            projectId: "ao-temple",
-            storageBucket: "ao-temple.appspot.com",
-            messagingSenderId: "426167530682",
-            appId: "1:426167530682:web:848a4cb0ceee2ce05cfe83"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const flatNumber = localStorage.getItem('flatNumber'); // Retrieve flat number from local storage
-
-        // Fetch and display registration history
-        // Fetch and display registration history
-async function fetchRegistrationHistory() {
-    const registrationsRef = collection(db, 'users', flatNumber, 'registrations');
-    const snapshot = await getDocs(registrationsRef);
-    const tableBody = document.querySelector('#registrationTable tbody');
-    tableBody.innerHTML = ''; // Clear existing rows
-
-    const isLargeScreen = window.innerWidth >= 601; // Check if screen is larger than or equal to 601px
-
-    snapshot.forEach(doc => {
-        const data = doc.data();
-        const row = document.createElement('tr');
-
-        if (isLargeScreen) {
-            // For larger screens, display all fields directly in the table
-            row.innerHTML = `
-                <td>${data.name}</td>
-                <td>${data.date}</td>
-                <td>${data.mobileNumber}</td>
-                <td>${data.event}</td>
-                <td>${data.occasion}</td>
-                <td>${data.receiptNumber}</td>
-            `;
-        } else {
-            // For mobile, display only event and receipt number with expandable content
-            const toggleButton = document.createElement('button');
-            toggleButton.classList.add('toggle-button');
-            toggleButton.innerHTML = '➕'; // Plus icon
-
-            const expandableContent = document.createElement('div');
-            expandableContent.classList.add('expandable-content');
-            expandableContent.innerHTML = `
-                <div><span class="label">Name:</span> <span class="value">${data.name}</span></div>
-                <div><span class="label">Date:</span> <span class="value">${data.date}</span></div>
-                <div><span class="label">Mobile Number:</span> <span class="value">${data.mobileNumber}</span></div>
-                <div><span class="label">Event:</span> <span class="value">${data.event}</span></div>
-                <div><span class="label">Occasion:</span> <span class="value">${data.occasion}</span></div>
-                <div><span class="label">Receipt No:</span> <span class="value">${data.receiptNumber}</span></div>
-            `;
-
-            row.innerHTML = `
-                <td>${data.event}</td>
-                <td>${data.receiptNumber}</td>
-            `;
-            row.appendChild(toggleButton);
-            row.appendChild(expandableContent);
-
-            toggleButton.onclick = function (event) {
-                expandableContent.classList.toggle('expanded');
-                toggleButton.innerHTML = expandableContent.classList.contains('expanded') ? '➖' : '➕';
-                event.stopPropagation();
-            };
-
-            row.onclick = function () {
-                expandableContent.classList.remove('expanded');
-                toggleButton.innerHTML = '➕';
-            };
-        }
-
-        tableBody.appendChild(row);
-    });
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
+import {getAuth,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-auth.js';
+import {getFirestore,collection,getDocs} from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
+const config=window.TEMPLE_FIREBASE_CONFIG;
+async function fetchRegistrationHistory(){
+ const body=document.querySelector('#registrationTable tbody');if(!body)return;body.replaceChildren();
+ if(!config||config.projectId==='YOUR_STAGING_PROJECT_ID'){const row=document.createElement('tr'),cell=document.createElement('td');cell.colSpan=6;cell.textContent='Staging Firebase is not configured.';row.append(cell);body.append(row);return;}
+ try{const app=initializeApp(config),auth=getAuth(app);
+ const user=await new Promise(resolve=>{const unsub=onAuthStateChanged(auth,value=>{unsub();resolve(value);});});if(!user||!user.emailVerified){location.replace('resident-access.html');return;}const token=await user.getIdTokenResult(true),flat=token.claims.flatNumber;if(token.claims.role!=='resident'||!flat){location.replace('resident-access.html');return;}const db=getFirestore(app),snapshot=await getDocs(collection(db,'users',flat,'registrations')),large=window.innerWidth>=601;
+ snapshot.docs.sort((a,b)=>String(b.data().date||'').localeCompare(String(a.data().date||''))).forEach(item=>{const data=item.data(),row=document.createElement('tr');
+ const addCell=(parent,value)=>{const td=document.createElement('td');td.textContent=String(value??'');parent.append(td);};
+ if(large){[data.name,data.date,data.mobileNumber,data.event,data.occasion,data.receiptNumber].forEach(v=>addCell(row,v));}
+ else{addCell(row,data.event);addCell(row,data.receiptNumber);const control=document.createElement('td'),toggle=document.createElement('button');toggle.type='button';toggle.className='toggle-button';toggle.textContent='+';toggle.setAttribute('aria-expanded','false');control.append(toggle);row.append(control);const details=document.createElement('td'),panel=document.createElement('div');panel.className='expandable-content';[['Name',data.name],['Date',data.date],['Mobile Number',data.mobileNumber],['Event',data.event],['Occasion',data.occasion],['Receipt No',data.receiptNumber]].forEach(([label,value])=>{const line=document.createElement('div'),strong=document.createElement('span'),text=document.createElement('span');strong.className='label';strong.textContent=label+': ';text.className='value';text.textContent=String(value??'');line.append(strong,text);panel.append(line);});details.append(panel);row.append(details);toggle.addEventListener('click',e=>{e.stopPropagation();const open=panel.classList.toggle('expanded');toggle.textContent=open?'−':'+';toggle.setAttribute('aria-expanded',String(open));});}
+ body.append(row);});
+ }catch(error){console.error('Registration history could not be loaded:',error);const row=document.createElement('tr'),cell=document.createElement('td');cell.colSpan=6;cell.textContent='Registration history could not be loaded. Please sign in again or refresh.';row.append(cell);body.append(row);}
 }
-
-// Fetch the registration history when the page loads
-fetchRegistrationHistory();
-
-// Ensure table updates when window is resized (optional)
-window.addEventListener('resize', fetchRegistrationHistory);
-
-
-        // Handle clicks outside of expandable rows to collapse them
-        document.addEventListener('click', function () {
-            const allExpandableContents = document.querySelectorAll('.expandable-content');
-            const allToggleButtons = document.querySelectorAll('.toggle-button');
-
-            allExpandableContents.forEach(content => {
-                content.classList.remove('expanded'); // Collapse all
-            });
-
-            allToggleButtons.forEach(button => {
-                button.innerHTML = '➕'; // Reset all buttons to plus
-            });
-        });
-    </script>
+fetchRegistrationHistory();window.addEventListener('resize',()=>{clearTimeout(window.__templeHistoryResize);window.__templeHistoryResize=setTimeout(fetchRegistrationHistory,150);});
+</script>
+<script src="firebase-config.js"></script>
 <script src="site-shell.js"></script></body>
 <script src="script.js"></script>
 </html>

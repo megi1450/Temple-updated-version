@@ -1,30 +1,19 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
-import { getFirestore, setDoc, doc, getDoc, collection } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
-
-const firebaseConfig={apiKey:'AIzaSyBKtqm0KzMmX4cCqT3PhGI2aFcF3LSXnEk',authDomain:'ao-temple.firebaseapp.com',projectId:'ao-temple',storageBucket:'ao-temple.appspot.com',messagingSenderId:'426167530682',appId:'1:426167530682:web:848a4cb0ceee2ce05cfe83'};
-const db=getFirestore(initializeApp(firebaseConfig));
-const form=document.getElementById('residentAccessForm');
-const status=document.getElementById('authStatus');
-const mode=document.body.dataset.authMode;
-const messages={
-  invalid:{en:'Enter a valid flat number, for example A001 or B1904.',kn:'ಮಾನ್ಯವಾದ ಫ್ಲಾಟ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ, ಉದಾಹರಣೆಗೆ A001 ಅಥವಾ B1904.'},
-  required:{en:'Enter your flat number, name and email address.',kn:'ನಿಮ್ಮ ಫ್ಲಾಟ್ ಸಂಖ್ಯೆ, ಹೆಸರು ಮತ್ತು ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ನಮೂದಿಸಿ.'},
-  email:{en:'Enter a valid email address.',kn:'ಮಾನ್ಯವಾದ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ನಮೂದಿಸಿ.'},
-  checking:{en:'Checking your resident details…',kn:'ನಿಮ್ಮ ನಿವಾಸಿ ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ…'},
-  missingResident:{en:'No registered account matches these details.',kn:'ಈ ವಿವರಗಳಿಗೆ ಹೊಂದುವ ನೋಂದಾಯಿತ ಖಾತೆ ಕಂಡುಬಂದಿಲ್ಲ.'},
-  missingFlat:{en:'No resident record was found for this flat number.',kn:'ಈ ಫ್ಲಾಟ್ ಸಂಖ್ಯೆಗೆ ಯಾವುದೇ ನಿವಾಸಿ ದಾಖಲೆ ಕಂಡುಬಂದಿಲ್ಲ.'},
-  duplicate:{en:'This resident is already registered. Sign in instead.',kn:'ಈ ನಿವಾಸಿ ಈಗಾಗಲೇ ನೋಂದಾಯಿತರಾಗಿದ್ದಾರೆ. ಬದಲಾಗಿ ಸೈನ್ ಇನ್ ಮಾಡಿ.'},
-  failed:{en:'We could not complete this request. Please try again.',kn:'ಈ ವಿನಂತಿಯನ್ನು ಪೂರ್ಣಗೊಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.'}
-};
-const language=()=>'en';
-const flatInput=form?.elements?.namedItem('flatNumber');
-if(flatInput){flatInput.addEventListener('input',()=>{const clean=flatInput.value.replace(/\s+/g,'').toUpperCase();if(flatInput.value!==clean)flatInput.value=clean;if(status){status.classList.remove('is-visible');status.textContent='';delete status.dataset.key;}});}
-form?.querySelectorAll('input').forEach(input=>input.addEventListener('input',()=>{if(status?.classList.contains('is-visible')){status.classList.remove('is-visible');status.textContent='';delete status.dataset.key;}}));
-function show(key,tone='error'){status.dataset.key=key;status.dataset.tone=tone;status.textContent=messages[key][language()];status.classList.add('is-visible');}
-function refreshStatus(){if(status.dataset.key)status.textContent=messages[status.dataset.key][language()];}
-function setBusy(busy){form.querySelectorAll('input,button').forEach(el=>el.disabled=busy);form.querySelector('button').setAttribute('aria-busy',String(busy));}
-function values(){return {flatNumber:form.flatNumber.value.trim().toUpperCase(),residentName:form.residentName.value.trim(),email:form.email.value.trim().toLowerCase()};}
-function validate(v){const flat=/^([A-F])?(00[1-4]|0?[1-9]0[1-4]|1[0-9]0[1-4])$/;if(!v.flatNumber||!v.residentName||!v.email){show('required');return false;}if(!flat.test(v.flatNumber)){show('invalid');return false;}if(!form.email.validity.valid){show('email');return false;}return true;}
-
-document.addEventListener('DOMContentLoaded',()=>{if(mode==='login'){['flatNumber','residentName','email'].forEach(id=>{const saved=localStorage.getItem(id);if(saved)form[id].value=saved;});}});
-form.addEventListener('submit',async event=>{event.preventDefault();const v=values();if(!validate(v))return;show('checking','info');setBusy(true);try{const flatRef=doc(db,'users',v.flatNumber);const flatSnap=await getDoc(flatRef);const residentDocId=`${v.residentName.replace(/\s+/g,'_')}_${v.email}`;const residentRef=doc(collection(flatRef,'residents'),residentDocId);if(mode==='login'){if(!flatSnap.exists()){show('missingFlat');return;}const residentSnap=await getDoc(residentRef);if(!residentSnap.exists()){show('missingResident');return;}localStorage.setItem('input','true');localStorage.setItem('flatNumber',v.flatNumber);localStorage.setItem('residentName',v.residentName);localStorage.setItem('email',v.email);localStorage.setItem('residentDocId',residentDocId);localStorage.setItem('residentSessionAt',new Date().toISOString());location.href='resident-dashboard.html';return;}if(!flatSnap.exists())await setDoc(flatRef,{});const residentSnap=await getDoc(residentRef);if(residentSnap.exists()){show('duplicate');return;}await setDoc(residentRef,{name:v.residentName,email:v.email,signInTime:new Date().toISOString()});localStorage.setItem('input','true');localStorage.setItem('flatNumber',v.flatNumber);localStorage.setItem('residentName',v.residentName);localStorage.setItem('email',v.email);localStorage.setItem('residentDocId',residentDocId);localStorage.setItem('residentSessionAt',new Date().toISOString());location.href='terms.html';}catch(error){console.error('Resident access error:',error);show('failed');}finally{setBusy(false);}});
+import { getAuth, signInWithEmailAndPassword, sendEmailVerification, signOut } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-auth.js';
+import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-functions.js';
+import { initializeAppCheck, ReCaptchaV3Provider } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app-check.js';
+const form=document.getElementById('residentAccessForm'), status=document.getElementById('authStatus'), mode=document.body.dataset.authMode;
+const messages={config:'Staging Firebase is not configured yet. Please contact the site administrator.',required:'Complete all required fields.',invalid:'Enter a valid flat number, for example A1404.',email:'Enter a valid email address.',password:'Use a password with at least 12 characters.',checking:'Please wait while we securely check your details…',missing:'No resident account matches these details. Check your details or request an invitation.',invite:'This invitation is invalid, expired or does not match the resident details.',verify:'A verification email has been sent. Verify your email, then sign in.',unverified:'Your email is not verified yet. We have sent another verification email.',success:'Sign-in successful. Opening resident services…',failed:'We could not complete this request. Please check your details and try again.'};
+function show(key,tone='error'){status.textContent=messages[key]||messages.failed;status.dataset.tone=tone;status.classList.add('is-visible');}
+function busy(value){form.querySelectorAll('input,button').forEach(el=>el.disabled=value);const b=form.querySelector('button[type=submit]');if(b)b.setAttribute('aria-busy',String(value));}
+function config(){const c=window.TEMPLE_FIREBASE_CONFIG;if(!c||!c.apiKey||c.projectId==='YOUR_STAGING_PROJECT_ID'||c.apiKey==='YOUR_STAGING_WEB_API_KEY')throw new Error('STAGING_CONFIG_MISSING');return c;}
+const flatPattern=/^([A-F])?(00[1-4]|0?[1-9]0[1-4]|1[0-9]0[1-4])$/;
+form?.addEventListener('submit',async e=>{e.preventDefault();const v={flatNumber:form.elements.namedItem('flatNumber').value.trim().toUpperCase(),residentName:form.elements.namedItem('residentName').value.trim(),email:form.elements.namedItem('email').value.trim().toLowerCase(),password:form.elements.namedItem('password').value,invitationCode:form.elements.namedItem('invitationCode')?.value.trim()||''};
+ if(!v.flatNumber||!v.residentName||!v.email||!v.password||(mode==='register'&&!v.invitationCode)){show('required');return;}if(!flatPattern.test(v.flatNumber)){show('invalid');return;}if(!form.elements.namedItem('email').validity.valid){show('email');return;}if(v.password.length<12){show('password');return;}
+ busy(true);show('checking','info');try{const app=initializeApp(config()),auth=getAuth(app),functions=getFunctions(app);if(!window.TEMPLE_APPCHECK_SITE_KEY||window.TEMPLE_APPCHECK_SITE_KEY.startsWith('YOUR_'))throw new Error('Configure the staging App Check reCAPTCHA site key.');initializeAppCheck(app,{provider:new ReCaptchaV3Provider(window.TEMPLE_APPCHECK_SITE_KEY),isTokenAutoRefreshEnabled:true});
+  if(mode==='register'){const create= httpsCallable(functions,'registerResident');await create(v);const credential=await signInWithEmailAndPassword(auth,v.email,v.password);await sendEmailVerification(credential.user);await signOut(auth);show('verify','success');return;}
+  const credential=await signInWithEmailAndPassword(auth,v.email,v.password);if(!credential.user.emailVerified){await sendEmailVerification(credential.user);await signOut(auth);show('unverified');return;}
+  const token=await credential.user.getIdTokenResult(true);if(token.claims.role!=='resident'||token.claims.flatNumber!==v.flatNumber){await signOut(auth);show('missing');return;}
+  localStorage.setItem('flatNumber',v.flatNumber);localStorage.setItem('residentName',v.residentName);localStorage.setItem('email',v.email);localStorage.setItem('input','true');localStorage.setItem('residentUid',credential.user.uid);location.href='resident-dashboard.html';
+ }catch(error){console.error('Resident authentication failed:',error);show(error.code==='functions/permission-denied'?'invite':error.message==='STAGING_CONFIG_MISSING'?'config':error.code==='auth/invalid-credential'||error.code==='auth/user-not-found'?'missing':'failed');}finally{busy(false);}
+});

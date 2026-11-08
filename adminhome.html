@@ -119,7 +119,7 @@
         }
     </style>
 <link href="redesign.css" rel="stylesheet"/></head>
-<body data-area="admin" data-page="adminhome.html" onload="admin()">
+<body data-area="admin" data-page="adminhome.html">
 <h1>AO TEMPLE ADMIN</h1>
 <h2>Features Available:</h2>
 <div id="buttonPanel">
@@ -144,6 +144,8 @@
 <button class="button" onclick="window.location.href='donation-verification.html'">Open Donation Verification</button>
 </div>
 </div>
-<script src="site-shell.js"></script></body>
-<script src="admin.js"></script>
+<script src="firebase-config.js"></script>
+<script src="site-shell.js"></script>
+<script type="module" src="admin-guard.js"></script><section class="content-card" style="margin:1rem 0;padding:1.25rem"><h2>Resident access management</h2><p>Issue single-use invitations for verified resident accounts.</p><a class="btn" href="resident-invites.html">Manage resident invitations</a></section></body>
+
 </html>

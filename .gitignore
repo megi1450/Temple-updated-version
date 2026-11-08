@@ -67,3 +67,13 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+# Local Firebase staging configuration and generated artifacts
+firebase-config.local.js
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+functions/node_modules/
+functions/.env*
+!functions/.env.example

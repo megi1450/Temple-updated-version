@@ -1,31 +1,44 @@
-# Temple updated version
+# Shri Varasiddhi Vinayaka Temple — redesigned test project
 
-A resident-first website for **Shri Varasiddhi Vinayaka Temple, Arvind Oasis**.
+A responsive, resident-first website for Arvind Oasis. This repository is the **test destination** for the original `Temple-Website` functionality migration. The original repository is not modified by this work.
+
+## Website functionality
+
+- Public temple homepage with Kannada/English translation control **only on the homepage**.
+- Public pages: temple information, events, announcements, committee, gallery and terms.
+- Resident access: invitation-based account registration, email/password sign-in, email verification, resident dashboard and profile.
+- Puja/seva registration with server-assigned receipt numbers and resident registration history.
+- UPI donation submission, duplicate UTR protection, resident donation history, downloadable PDF receipts and native share support.
+- Administrator tools: resident invitation management, donation verification/synchronization/deletion, charts and flat sorting.
+- Existing Google Apps Script / Google Sheets donation synchronization is supported through a server-side function secret.
 
 ## Architecture
 
-- Static HTML, CSS and vanilla JavaScript; no npm build step is required.
-- Shared navigation, page headings, footer and responsive design are provided by `site-shell.js`.
-- `redesign.css`, `ux-improvements.css` and `site-polish.css` provide the visual system. The last stylesheet is loaded by the shared shell on pages that use it.
-- Kannada / English switching is intentionally available **only on the public homepage** (`index.html` / `main.html`). Every other page remains in English, including resident and administration flows.
-- Existing Firestore, Google Apps Script, UPI and receipt integrations have been left intact during this visual and navigation overhaul.
+- Static HTML, CSS and vanilla JavaScript; no npm build step for the website UI.
+- Shared shell: `site-shell.js`; design layers: `redesign.css`, `ux-improvements.css`, `site-polish.css`.
+- Firebase client configuration is centralized in `firebase-config.js`. The committed file is deliberately a placeholder.
+- Trusted server operations live in `functions/` (Node.js 20, Firebase Functions v2 + Admin SDK).
+- `firestore.rules` denies direct client writes. Resident/admin access uses Firebase Auth, verified email and custom role claims.
 
-## Local preview
+## Staging setup — required before functional testing
 
-Serve this folder with any static HTTP server. Open `index.html` for the public temple website, or `main.html` as a compatible homepage route. Relative asset paths expect the site to be served from the repository root.
+1. Create a **new Firebase staging project**. Enable Email/Password Authentication, Firestore, Cloud Functions and App Check (reCAPTCHA v3). Add the GitHub Pages test domain to Firebase Auth authorized domains and the App Check site key's allowed domains.
+2. Replace the placeholders in `firebase-config.js` with the staging Web App configuration and set `window.TEMPLE_APPCHECK_SITE_KEY` to the staging reCAPTCHA v3 site key. Never use the production temple Firebase project here.
+3. Set `.firebaserc` to the staging project ID only when ready to deploy. It is intentionally empty now to prevent accidental deployment.
+4. Install `functions/` dependencies with Node.js 20. Configure the `DONATIONS_ADMIN_KEY` Firebase Secret and `DONATIONS_SHEETS_WEB_APP_URL` Functions parameter. Use a **separate staging Google Sheet and Apps Script deployment**.
+5. Deploy Functions and `firestore.rules` to staging only. See `functions/README.md`.
+6. Create an administrator Firebase Auth user, verify its email, then run `functions/scripts/set-admin-claim.js` from a trusted machine using Application Default Credentials and the exact Auth UID. Never commit service-account files.
+7. Sign in as the administrator and issue one-time resident invitations. Invitations bind a flat, name and email and expire after seven days.
 
-## Important deployment and security warnings
+## Security boundaries
 
-This repository is an isolated copy of the original `Temple-Website` project, but several legacy browser modules still contain a Firebase configuration that points to the `ao-temple` project. Therefore, do not use resident registration, donation or administration workflows against live data while testing this copy. Configure a separate staging Firebase project and update its client configuration before functional testing or deployment.
+- `localStorage` and `sessionStorage` are UI hints only; they are not authorization.
+- Residents must use an admin-issued invitation, Firebase Auth and verified email.
+- Administrator rights are Firebase custom claims; there is no static browser password or donation admin key.
+- Puja registration, donation submission, receipt numbering and privileged donation actions run in trusted functions.
+- Existing legacy resident records are **not automatically migrated** to Auth accounts. Verify identity and approve a migration plan before importing.
+- Never deploy the staging Firestore rules/functions to the live temple project.
 
-The legacy resident and administrator access flows rely on client-side storage/session checks. They are not production-grade authentication. The administrator credential and a donation-verification integration key are embedded in browser-delivered JavaScript, so they must be treated as exposed and rotated. Move privileged operations behind Firebase Authentication with Firestore Security Rules and trusted server-side functions (or a secured Apps Script endpoint) before using the administration or donation-verification tools in production.
+## Validation status
 
-The repository has no default Firebase Hosting project configured. Do not point it at the live `ao-temple` project or deploy it until a separate staging/production plan is approved. The original repository remains unchanged.
-
-## Validation
-
-The current redesign has been checked for JavaScript syntax, CSS parsing, duplicate HTML IDs, missing local repository references and same-page anchor targets. Browser-based visual and end-to-end Firebase testing still requires a deployed staging preview and staging credentials.
-
-## Assets
-
-Original temple photographs are retained and organised under `assets/`. External visual assets and their sources/licences are documented in `ASSET_CREDITS.md`.
+JavaScript syntax checks and HTML/module parsing are performed during this migration. A live browser walkthrough, Firebase staging deployment, App Check validation, Firestore rules emulator tests and end-to-end payment/Sheets tests remain pending until the separate staging project and its credentials are configured.

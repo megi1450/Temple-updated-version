@@ -64,119 +64,26 @@
 <button class="portal-submit" type="submit">Continue to confirmation</button><p class="portal-form__note">Please check your details before submitting. If you need assistance, contact the temple committee.</p>
 </form>
 <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
-        import { getFirestore, setDoc, doc, serverTimestamp, getDoc, getDocs, collection } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyBKtqm0KzMmX4cCqT3PhGI2aFcF3LSXnEk",
-            authDomain: "ao-temple.firebaseapp.com",
-            projectId: "ao-temple",
-            storageBucket: "ao-temple.appspot.com",
-            messagingSenderId: "426167530682",
-            appId: "1:426167530682:web:848a4cb0ceee2ce05cfe83"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const flatNumber = localStorage.getItem('flatNumber');
-    
-        // Flag to track if the registration exists
-        let registrationExists = false;
-    
-        // Show/hide "Other Occasion" input when "Others" is selected
-        document.getElementById('occasion').addEventListener('change', function() {
-            const occasion = this.value;
-            const otherOccasionInput = document.getElementById('otherOccasion');
-            if (occasion === 'Others') {
-                otherOccasionInput.style.display = 'block'; // Show input when "Others" is selected
-            } else {
-                otherOccasionInput.style.display = 'none'; // Hide input for other occasions
-            }
-        });
-    
-        document.getElementById('registrationForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-    
-            // Reset registration exists flag
-            registrationExists = false;
-        
-            const name = document.getElementById('name').value;
-            const date = document.getElementById('date').value;
-            const mobileNumber = document.getElementById('mobileNumber').value;
-            const event = document.getElementById('event').value;
-            const occasion = document.getElementById('occasion').value;
-            const otherOccasion = document.getElementById('otherOccasion').value || "";
-    
-            // Create a unique registration ID
-            const registrationId = `${flatNumber}_${name}_${event}_${occasion || otherOccasion}`; 
-    
-            // Check if the registration already exists in both collections
-            const submissionsRef = collection(db, 'submissions');
-            const registrationsRef = collection(db, `users/${flatNumber}/registrations`);
-    
-            const submissionsQuery = await getDocs(submissionsRef);
-            const registrationsQuery = await getDocs(registrationsRef);
-            
-            // Check for existing submission
-            submissionsQuery.forEach(doc => {
-                if (doc.id === registrationId) {
-                    registrationExists = true;
-                }
-            });
-    
-            // Check for existing registration
-            registrationsQuery.forEach(doc => {
-                if (doc.id === registrationId) {
-                    registrationExists = true;
-                }
-            });
-    
-            // If registration exists, alert the user
-            if (registrationExists) {
-    alert("This registration already exists.");
-    window.location.href = "history.html"; // Redirect to history.html
-    return; // Stop further processing
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
+import { getAuth } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-auth.js';
+import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-functions.js';
+import { initializeAppCheck, ReCaptchaV3Provider } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app-check.js';
+const config=window.TEMPLE_FIREBASE_CONFIG;
+if(!config||config.projectId==='YOUR_STAGING_PROJECT_ID'){alert('The staging Firebase project is not configured yet.');}
+else {
+ const app=initializeApp(config);if(!window.TEMPLE_APPCHECK_SITE_KEY||window.TEMPLE_APPCHECK_SITE_KEY.startsWith('YOUR_'))throw new Error('Configure staging App Check.');initializeAppCheck(app,{provider:new ReCaptchaV3Provider(window.TEMPLE_APPCHECK_SITE_KEY),isTokenAutoRefreshEnabled:true});const auth=getAuth(app),submit=httpsCallable(getFunctions(app),'submitPujaRegistration');
+ const form=document.getElementById('registrationForm'),occasion=document.getElementById('occasion'),other=document.getElementById('otherOccasion');
+ occasion?.addEventListener('change',()=>{const visible=occasion.value==='Others';other.style.display=visible?'block':'none';other.required=visible;});
+ form?.addEventListener('submit',async event=>{event.preventDefault();if(!form.reportValidity())return;const user=auth.currentUser;if(!user||!user.emailVerified){location.replace('resident-access.html');return;}
+  const token=await user.getIdTokenResult(true);if(token.claims.role!=='resident'){location.replace('resident-access.html');return;}
+  const name=document.getElementById('name').value.trim(),date=document.getElementById('date').value,mobileNumber=document.getElementById('mobileNumber').value.trim(),eventName=document.getElementById('event').value,occasionValue=occasion.value==='Others'?other.value.trim():occasion.value,button=form.querySelector('[type=submit]');
+  if(!occasionValue){other.focus();return;}button.disabled=true;button.textContent='Submitting…';
+  try{const response=await submit({name,date,mobileNumber,event:eventName,occasion:occasionValue});const record=response.data;const params=new URLSearchParams({receiptNumber:record.receiptNumber,name:record.name,date:record.date,flatNumber:record.flatNumber,mobileNumber:record.mobileNumber,event:record.event,occasion:record.occasion,registrationId:record.registrationId});location.href='receipt.html?'+params.toString();}
+  catch(error){console.error('Puja registration failed:',error);alert(error.code==='functions/already-exists'?'This registration already exists.':'Unable to submit your registration. Please try again.');button.disabled=false;button.textContent='Submit';}
+ });
 }
-
-    
-            // Proceed with fetching the last receipt number and saving the registration
-            const receiptDoc = doc(db, 'receiptNumbers', 'counter');
-            const receiptSnap = await getDoc(receiptDoc);
-            let receiptNumber = '0001'; // Default to the first receipt number as a string
-        
-            if (receiptSnap.exists()) {
-                // Get the last receipt number as a string
-                receiptNumber = receiptSnap.data().lastReceiptNumber; 
-                let newNumber = parseInt(receiptNumber) + 1; // Increment the last receipt number
-                receiptNumber = String(newNumber).padStart(4, '0'); // Format it to always be 4 digits
-            }
-    
-            // Save the registration data
-            const registrationData = {
-                name,
-                date,
-                flatNumber,
-                mobileNumber,
-                event,
-                occasion: occasion === "Others" ? otherOccasion : occasion,
-                registrationId,
-                createdAt: serverTimestamp(),
-                receiptNumber // Store the formatted receipt number
-            };
-    
-            // Save data to the submissions collection
-            await setDoc(doc(db, 'submissions', registrationId), registrationData);
-        
-            // Save data under the user's flat number in the "registrations" sub-collection
-            await setDoc(doc(db, 'users', flatNumber, 'registrations', registrationId), registrationData);
-        
-            // Save the updated receipt number back to Firestore as a string
-            await setDoc(receiptDoc, { lastReceiptNumber: receiptNumber });
-        
-            // Redirect to the receipt page with the necessary details
-            window.location.href = `receipt.html?receiptNumber=${receiptNumber}&name=${name}&date=${date}&flatNumber=${flatNumber}&mobileNumber=${mobileNumber}&event=${event}&occasion=${occasion === "Others" ? otherOccasion : occasion}&registrationId=${registrationId}`;
-        });
-    </script>
+</script>
+<script src="firebase-config.js"></script>
 <script src="site-shell.js"></script></body>
 <script src="script.js"></script>
 </html>

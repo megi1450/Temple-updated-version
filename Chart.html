@@ -11,15 +11,8 @@
         import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
         // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBKtqm0KzMmX4cCqT3PhGI2aFcF3LSXnEk",
-            authDomain: "ao-temple.firebaseapp.com",
-            projectId: "ao-temple",
-            storageBucket: "ao-temple.firebasestorage.app",
-            messagingSenderId: "426167530682",
-            appId: "1:426167530682:web:848a4cb0ceee2ce05cfe83",
-            measurementId: "G-PXNQPS2DY6"
-        };
+        const firebaseConfig = window.TEMPLE_FIREBASE_CONFIG;
+if (!firebaseConfig || firebaseConfig.projectId === 'YOUR_STAGING_PROJECT_ID') throw new Error('Configure staging Firebase first.');
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
@@ -207,7 +200,7 @@
         }
     </style>
 <title>Contribution Reports</title><link href="redesign.css" rel="stylesheet"/></head>
-<body data-area="admin" data-page="Chart.html" onload="admin()">
+<body data-area="admin" data-page="Chart.html">
 <h2>Flat and Block Contributions for Temple Activities</h2>
 <!-- Dropdown Menus for Event and View Selection -->
 <div class="dropdown-container">
@@ -240,6 +233,8 @@
 <div><span style="background-color: rgba(75, 192, 192, 0.6)"></span>Total Registrations</div>
 <div><span style="background-color: rgba(153, 102, 255, 0.6)"></span>Registrations Per Block</div>
 </div>
-<script src="site-shell.js"></script></body>
-<script src="admin.js"></script>
+<script src="firebase-config.js"></script>
+<script src="site-shell.js"></script>
+<script type="module" src="admin-guard.js"></script></body>
+
 </html>

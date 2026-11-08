@@ -39,6 +39,14 @@
           <label for="email" data-en="Email address" data-kn="ಇಮೇಲ್ ವಿಳಾಸ">Email address</label>
           <input id="email" name="email" type="email" placeholder="name@example.com" data-en-placeholder="name@example.com" data-kn-placeholder="name@example.com" required autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false">
         </div>
+        <div class="auth-field">
+          <label for="invitationCode">Resident invitation code</label>
+          <input id="invitationCode" name="invitationCode" type="text" autocomplete="off" spellcheck="false" required placeholder="Enter the code provided by the Temple Committee">
+        </div>
+        <div class="auth-field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" minlength="12" autocomplete="new-password" placeholder="At least 12 characters" required>
+        </div>
         <p class="auth-help" data-en="Please enter your name and email exactly as you would like them saved in your resident profile." data-kn="ನಿಮ್ಮ ನಿವಾಸಿ ಪ್ರೊಫೈಲ್‌ನಲ್ಲಿ ಉಳಿಸಲು ಬಯಸುವ ಹೆಸರು ಮತ್ತು ಇಮೇಲ್ ಅನ್ನು ನಮೂದಿಸಿ.">Please enter your name and email exactly as you would like them saved in your resident profile.</p>
         <p id="authStatus" class="auth-status" role="alert" aria-live="polite"></p>
         <button class="auth-submit" type="submit" data-en="Create account" data-kn="ಖಾತೆ ರಚಿಸಿ">Create account</button>
@@ -47,6 +55,7 @@
       <a class="auth-back" href="resident-access.html">← <span data-en="All resident access options" data-kn="ಎಲ್ಲಾ ನಿವಾಸಿ ಪ್ರವೇಶ ಆಯ್ಕೆಗಳು">All resident access options</span></a>
     </section>
   </main>
+  <script src="firebase-config.js"></script>
   <script src="site-shell.js"></script>
   <script type="module" src="auth.js"></script>
 </body>

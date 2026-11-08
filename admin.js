@@ -1,20 +1,4 @@
-function pass() {
-    const passwordInput = document.getElementById('password').value;
-
-    // Replace 'yourpassword' with the actual password
-    const correctPassword = 'india';
-
-    if (passwordInput === correctPassword) {
-        sessionStorage.setItem('login', 'true'); // Store login state
-        window.location.href = 'adminhome.html'; // Redirect to admin home
-    } else {
-        alert('Incorrect password. Please try again.');
-    }
-}
-
-function admin() {
-    // Check if the login state is 'true'
-    if (sessionStorage.getItem('login') !== 'true') {
-        window.location.href = 'pass.html'; // Redirect to password page
-    }
-}
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
+import { getAuth, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-auth.js';
+const form=document.getElementById('adminLoginForm'), status=document.getElementById('adminStatus');
+form?.addEventListener('submit',async e=>{e.preventDefault();const email=form.elements.email.value.trim().toLowerCase(),password=form.elements.password.value,button=form.querySelector('button');button.disabled=true;status.textContent='Checking administrator access…';try{const c=window.TEMPLE_FIREBASE_CONFIG;if(!c||c.projectId==='YOUR_STAGING_PROJECT_ID')throw new Error('Staging Firebase is not configured.');const auth=getAuth(initializeApp(c));const credential=await signInWithEmailAndPassword(auth,email,password);if(!credential.user.emailVerified){await signOut(auth);throw new Error('Verify the administrator email before signing in.');}const token=await credential.user.getIdTokenResult(true);if(token.claims.role!=='admin'){await signOut(auth);throw new Error('This account does not have administrator access.');}sessionStorage.setItem('login','true');location.href='adminhome.html';}catch(error){console.error(error);status.textContent=error.message||'Administrator sign-in failed.';}finally{button.disabled=false;}});
