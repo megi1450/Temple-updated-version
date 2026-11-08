@@ -1,4 +1,4 @@
-/* Shri Varasiddhi Vinayaka Temple — unified site design system */
+/* Shri Varasiddhi Vinayaka Temple â unified site design system */
 :root{
   --temple-ink:#282522;--temple-muted:#716a63;--temple-paper:#faf7f1;--temple-surface:#fff;
   --temple-wine:#642d38;--temple-wine-deep:#421e27;--temple-gold:#b28b52;--temple-gold-pale:#f3e8d7;
@@ -36,7 +36,7 @@ p{max-width:75ch}
 .site-nav>a:hover,.nav-dropdown>summary:hover,.site-nav>a[aria-current="page"]{background:#f4eee5;color:var(--temple-wine)}
 .nav-dropdown{position:relative}
 .nav-dropdown>summary::-webkit-details-marker{display:none}
-.nav-dropdown>summary:after{content:'⌄';margin-left:6px;color:var(--temple-gold)}
+.nav-dropdown>summary:after{content:'â';margin-left:6px;color:var(--temple-gold)}
 .nav-dropdown__menu{position:absolute;top:calc(100% + 8px);left:0;z-index:30;display:grid;min-width:210px;padding:8px;background:#fff;border:1px solid var(--temple-line);border-radius:13px;box-shadow:var(--temple-shadow)}
 .nav-dropdown__menu a{padding:10px 12px;border-radius:8px;color:var(--temple-ink);font-size:12px;text-decoration:none}
 .nav-dropdown__menu a:hover{background:#f7f1e8;color:var(--temple-wine)}
@@ -232,3 +232,61 @@ body.auth-page main.auth-card{width:min(1160px,100%)!important;max-width:1160px!
 body.auth-page main.auth-card>.auth-panel{padding:clamp(28px,4.5vw,62px)!important}
 @media(max-width:860px){body.auth-page main.auth-card>.auth-panel{padding:28px!important}}
 @media(max-width:680px){body.auth-page main.auth-card{width:100%!important;margin:14px auto!important}body.auth-page main.auth-card>.auth-panel{padding:24px 20px 28px!important}}
+
+
+/* Site-wide responsive hardening */
+html,body{width:100%;max-width:100%;overflow-x:clip}
+body{min-width:320px}
+main,header,footer,section,article,aside,nav,.site-content,.site-content>.container{min-width:0;max-width:100%}
+.site-content,.site-page-intro{overflow-wrap:anywhere}
+.site-content img,main img,video,iframe{max-width:100%}
+.site-content input,.site-content select,.site-content textarea,.site-content button{max-width:100%}
+.site-content pre,.site-content code{max-width:100%;white-space:pre-wrap;overflow-wrap:anywhere}
+.site-content .table-wrap,.site-content .results,.site-content .chart-container,.site-content .table-responsive{max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain}
+.site-content .stats,.site-content .stat-grid,.site-content .dashboard-stats,.site-content .filters,.site-content .filter-row,.site-content .dropdown-container{min-width:0}
+.site-content .stats>*,.site-content .stat-grid>*,.site-content .dashboard-stats>*,.site-content .card,.site-content .panel{min-width:0;overflow-wrap:anywhere}
+.site-content .page-heading,.site-content .actions,.site-content .profile-actions{min-width:0;flex-wrap:wrap}
+.site-content .page-heading>*{min-width:0;max-width:100%}
+.site-header__inner{min-width:0}
+.site-brand{flex:0 1 auto}
+.site-nav{min-width:0}
+
+/* Pooja Events: preserve the full desktop table, present clean service cards on phones */
+.events-section{min-width:0;width:100%;padding:clamp(16px,3vw,32px) 0!important}
+.events-section>.container{width:min(1180px,calc(100% - 40px))!important;max-width:1180px!important;min-width:0!important;margin-inline:auto!important}
+.events-section>div:first-child{max-width:100%;padding-inline:16px;overflow-wrap:anywhere}
+.events-table{width:100%!important;max-width:100%!important;min-width:0!important;table-layout:fixed;border-collapse:separate!important;border-spacing:0!important}
+.events-table th,.events-table td{min-width:0!important;overflow-wrap:anywhere;word-break:normal}
+.events-table td:first-child{width:auto}
+.events-table td:last-child{width:150px;white-space:nowrap}
+.events-table button{white-space:normal;min-height:40px}
+@media(max-width:680px){
+  .events-section>.container{width:calc(100% - 28px)!important}
+  .events-section .events-table{display:block!important;overflow:visible!important;border:0!important;background:transparent!important;border-radius:0!important}
+  .events-section .events-table thead{display:none!important}
+  .events-section .events-table tbody{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important;width:100%!important}
+  .events-section .events-table tr{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:start!important;gap:10px 12px!important;width:100%!important;padding:16px!important;border:1px solid var(--temple-line)!important;border-radius:15px!important;background:#fff!important;box-shadow:0 7px 22px rgba(47,34,28,.045)!important}
+  .events-section .events-table td{display:block!important;width:auto!important;min-width:0!important;padding:0!important;border:0!important;background:transparent!important;font-size:12px!important;line-height:1.7!important;overflow-wrap:anywhere}
+  .events-section .events-table td:first-child{grid-column:1/-1!important;color:var(--temple-wine-deep)!important;font-weight:600}
+  .events-section .events-table td:last-child{grid-column:2!important;grid-row:1!important;justify-self:end!important;align-self:start!important;padding:5px 9px!important;border-radius:999px!important;background:var(--temple-gold-pale)!important;color:var(--temple-wine-deep)!important;font-weight:800!important;font-size:12px!important}
+  .events-section .events-table td:first-child button{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:auto!important;max-width:100%!important;margin-top:10px!important;padding:10px 14px!important}
+  .events-section .events-table br{line-height:2}
+}
+@media(max-width:380px){.events-section>.container{width:calc(100% - 22px)!important}.events-section .events-table tr{padding:13px!important}.site-topline{padding-inline:12px!important}.site-content{width:calc(100% - 22px)!important}}
+
+/* Consistent accessible loading feedback */
+.temple-loading-overlay{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;padding:24px;background:rgba(31,22,23,.34);backdrop-filter:blur(5px);opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease}
+.temple-loading-overlay.is-visible{opacity:1;visibility:visible}
+.temple-loading-card{display:flex;align-items:center;gap:15px;min-width:min(270px,100%);padding:18px 22px;border:1px solid rgba(255,255,255,.7);border-radius:17px;background:#fffdfa;box-shadow:0 20px 60px rgba(25,17,18,.2);color:var(--temple-wine-deep)}
+.temple-loading-mark{position:relative;display:grid;place-items:center;width:38px;height:38px;flex:0 0 38px;border:3px solid #eadfce;border-top-color:var(--temple-wine);border-radius:50%;animation:templeSpin .8s linear infinite}
+.temple-loading-mark:after{content:'';width:7px;height:7px;border-radius:50%;background:var(--temple-gold)}
+.temple-loading-copy{display:grid;gap:2px;min-width:0}
+.temple-loading-copy strong{font-size:13px;font-weight:800;letter-spacing:.01em}
+.temple-loading-copy span{font-size:11px;color:#786e66}
+.temple-loading-bar{height:3px;width:100%;margin-top:5px;overflow:hidden;border-radius:99px;background:#eee5d9}
+.temple-loading-bar:after{content:'';display:block;width:42%;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--temple-gold),var(--temple-wine));animation:templeProgress 1.25s ease-in-out infinite}
+.temple-button-spinner{display:inline-block;width:13px;height:13px;margin-right:8px;vertical-align:-2px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:templeSpin .65s linear infinite}
+[data-loading-active=true]{pointer-events:none;opacity:.82}
+@keyframes templeSpin{to{transform:rotate(360deg)}}
+@keyframes templeProgress{0%{transform:translateX(-110%)}100%{transform:translateX(250%)}}
+@media(prefers-reduced-motion:reduce){.temple-loading-mark,.temple-loading-bar:after,.temple-button-spinner{animation:none!important}.temple-loading-overlay{transition:none!important}}
