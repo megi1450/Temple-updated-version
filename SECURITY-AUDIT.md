@@ -32,3 +32,11 @@ The redesigned site intentionally reuses the existing `ao-temple` Firestore coll
 - Public informational pages were corrected so they no longer require resident sign-in just to browse.
 - Admin event search now renders Firestore content with DOM text nodes instead of interpolating it into `innerHTML`.
 - Browser-driven screenshot and real authenticated read/write journeys remain unverified in this environment.
+
+
+## Additional quality fixes in the follow-up pass
+
+- Resident email casing is now preserved when deriving the legacy resident document ID, matching the original site's `${name_with_underscores}_${email}` convention.
+- Firebase configuration is explicitly loaded before the Chart, flat-search and registration-history module scripts.
+- Shared scripts were moved back inside the `body` element on announcements, committee, history and receipt pages.
+- The shared animated loader remains a 63-frame GIF but was resized to 64×64 pixels (it is displayed at 50×50) and optimized from 1,351,819 bytes to 144,435 bytes — an 89.3% reduction.

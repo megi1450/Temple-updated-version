@@ -8,7 +8,7 @@ const show=(message,error=true)=>{status.textContent=message;status.dataset.tone
 const setBusy=value=>form.querySelectorAll('input,button').forEach(el=>el.disabled=value);
 function residentId(name,email){return `${name.replace(/\s+/g,'_')}_${email}`;}
 function config(){const c=window.TEMPLE_FIREBASE_CONFIG;if(!c||c.projectId!=='ao-temple')throw new Error('The existing temple Firebase configuration is missing.');return c;}
-form?.addEventListener('submit',async e=>{e.preventDefault();const flatNumber=form.elements.flatNumber.value.trim().toUpperCase(),residentName=form.elements.residentName.value.trim(),email=form.elements.email.value.trim().toLowerCase();
+form?.addEventListener('submit',async e=>{e.preventDefault();const flatNumber=form.elements.flatNumber.value.trim().toUpperCase(),residentName=form.elements.residentName.value.trim(),email=form.elements.email.value.trim();
  if(!flatNumber||!residentName||!email){show('Please complete all fields.');return;}if(!flatPattern.test(flatNumber)){show('Enter a valid flat number, for example A1404.');return;}if(!form.elements.email.validity.valid){show('Enter a valid email address.');return;}
  setBusy(true);show('Checking the existing resident records…',false);
  try{const db=getFirestore(initializeApp(config())),flatRef=doc(db,'users',flatNumber),flatSnap=await getDoc(flatRef);const id=residentId(residentName,email),residentRef=doc(db,'users',flatNumber,'residents',id),residentSnap=await getDoc(residentRef);

@@ -199,6 +199,7 @@
 <hr/>
 </div>
 </footer>
+<script src="firebase-config.js"></script>
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
 import {getFirestore,collection,getDocs} from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
@@ -206,7 +207,8 @@ const c=window.TEMPLE_FIREBASE_CONFIG;
 async function loadHistory(){const body=document.querySelector('#registrationTable tbody');if(!body)return;body.replaceChildren();const flat=localStorage.getItem('flatNumber'),name=localStorage.getItem('residentName'),email=localStorage.getItem('email');if(localStorage.getItem('input')!=='true'||!flat||!name||!email){location.replace('login.html');return;}try{const db=getFirestore(initializeApp(c)),snap=await getDocs(collection(db,'users',flat,'registrations'));const rows=snap.docs.map(d=>d.data()).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));for(const d of rows){const tr=document.createElement('tr');[d.name,d.date,d.mobileNumber,d.event,d.occasion,d.receiptNumber].forEach(v=>{const td=document.createElement('td');td.textContent=String(v??'');tr.append(td);});body.append(tr);}if(!rows.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=6;td.textContent='No registrations found.';tr.append(td);body.append(tr);}}catch(e){console.error(e);const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=6;td.textContent='Could not load registration history. Please refresh.';tr.append(td);body.append(tr);}}
 loadHistory();
 </script>
-<script src="firebase-config.js"></script>
-<script src="site-shell.js"></script></body>
+
+<script src="site-shell.js"></script>
 <script src="script.js"></script>
+</body>
 </html>
