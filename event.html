@@ -144,6 +144,7 @@
         <button class="admin-nav-button" onclick="window.location.href='flatsort.html'">Flat Info</button>
 </div>
 <div id="searchPanel">
+<label for="event">Puja / seva</label>
 <select id="event">
 <option selected="" value="">None of the above</option>
 <option value="PANCHAMRIT ABHISHEKA">PANCHAMRIT ABHISHEKA</option>
@@ -153,6 +154,7 @@
 <option value="VEHICLE PUJA (TWO-WHEELER)">VEHICLE PUJA (TWO-WHEELER)</option>
 <option value="VEHICLE PUJA (FOUR-WHEELER)">VEHICLE PUJA (FOUR-WHEELER)</option>
 </select>
+<label for="occasion">Occasion</label>
 <select id="occasion">
 <option selected="" value="">None of the above</option>
 <option value="Birthday">Birthday</option>
@@ -160,9 +162,12 @@
 <option value="Others">Others</option>
 </select>
 <!-- Hidden text input for specifying "Other" occasion -->
+<label for="otherOccasionInput">Specify other occasion</label>
 <input id="otherOccasionInput" placeholder="Specify other occasion" style="display:none;" type="text"/>
+<label for="receiptNumber">Receipt number</label>
 <input id="receiptNumber" placeholder="Receipt Number" type="text"/>
 <!-- Month filter -->
+<label for="monthFilter">Month</label>
 <select id="monthFilter">
 <option selected="" value="">All Months</option>
 <option value="01">January</option>
@@ -185,156 +190,126 @@
 <div id="results"></div>
 <!-- Importing xlsx library for Excel export -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+<script src="firebase-config.js"></script>
 <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
-        import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
+import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBKtqm0KzMmX4cCqT3PhGI2aFcF3LSXnEk",
-            authDomain: "ao-temple.firebaseapp.com",
-            projectId: "ao-temple",
-            storageBucket: "ao-temple.appspot.com",
-            messagingSenderId: "426167530682",
-            appId: "1:426167530682:web:848a4cb0ceee2ce05cfe83"
-        };
+const firebaseConfig = window.TEMPLE_FIREBASE_CONFIG;
+if (!firebaseConfig || firebaseConfig.projectId !== 'ao-temple') {
+  throw new Error('The existing temple Firebase configuration is unavailable.');
+}
+const db = getFirestore(initializeApp(firebaseConfig));
+const $ = (id) => document.getElementById(id);
+const occasionSelect = $('occasion');
+const otherOccasionInput = $('otherOccasionInput');
+const loading = $('loading');
+const resultsDiv = $('results');
+let searchResults = [];
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        const occasionSelect = document.getElementById('occasion');
-        const otherOccasionInput = document.getElementById('otherOccasionInput');
-        let searchResults = [];
-
-        occasionSelect.addEventListener('change', () => {
-            if (occasionSelect.value === 'Others') {
-                otherOccasionInput.style.display = 'block';
-            } else {
-                otherOccasionInput.style.display = 'none';
-            }
-        });
-
-        document.getElementById('searchBtn').addEventListener('click', async () => {
-    const event = document.getElementById('event').value;
-    let occasion = document.getElementById('occasion').value;
-    const otherOccasion = document.getElementById('otherOccasionInput').value;
-    const receiptNumber = document.getElementById('receiptNumber').value;
-    const month = document.getElementById('monthFilter').value;
-    const loading = document.getElementById('loading');
-
-    if (occasion === 'Others') {
-        occasion = otherOccasion;
-    }
-
-    try {
-        const querySnapshot = await getDocs(collection(db, 'submissions'));
-        const resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = ''; // Clear previous results
-        searchResults = []; // Reset search results array
-        let registrationCount = 0; // Initialize registration count
-
-        querySnapshot.forEach((doc) => {
-            const data = doc.data();
-
-            // Extract month and day from the registration date
-            const regDate = new Date(data.date);
-            const regMonth = regDate.getMonth(); // Get 0-indexed month
-            const regDay = regDate.getDate();
-
-            // Convert month number to month name
-            const monthNames = [
-                "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-            ];
-            const monthName = monthNames[regMonth];
-
-            // Append ordinal suffix to the day
-            const ordinalSuffix = (day) => {
-                if (day > 3 && day < 21) return "th"; // Covers 4-20
-                switch (day % 10) {
-                    case 1: return "st";
-                    case 2: return "nd";
-                    case 3: return "rd";
-                    default: return "th";
-                }
-            };
-
-            const formattedDate = `${monthName} ${regDay}${ordinalSuffix(regDay)}`; // Example: August 4th
-
-            // Check if conditions are met
-            const isEventMatch = event === '' || data.event === event;
-            const isOccasionMatch = occasion === '' || data.occasion === occasion;
-            const isReceiptNumberMatch = receiptNumber === '' || data.receiptNumber === receiptNumber;
-            const isMonthMatch = month === '' || String(regMonth + 1).padStart(2, '0') === month;
-
-            // Only count registrations that match the filters
-            if (isEventMatch && isOccasionMatch && isReceiptNumberMatch && isMonthMatch) {
-                searchResults.push({
-                    ...data, // Store all the data
-                    regDate, // Store the parsed date object for sorting
-                    formattedDate // Store the formatted date
-                });
-                registrationCount++;
-            }
-        });
-
-        // Sort the results by date (latest first)
-        searchResults.sort((a, b) => b.regDate - a.regDate);
-
-        // Display sorted results
-        searchResults.forEach((data) => {
-            const resultDiv = document.createElement('div');
-            resultDiv.classList.add('result');
-            resultDiv.innerHTML = `
-                <p><strong>Receipt Number:</strong> ${data.receiptNumber}</p>
-                <p><strong>Name:</strong> ${data.name}</p>
-                <p><strong>Contact Number:</strong> ${data.mobileNumber}</p>
-                <p><strong>Flat Number:</strong> ${data.flatNumber}</p>
-                <p><strong>Event:</strong> ${data.event}</p>
-                <p><strong>Occasion:</strong> ${data.occasion}</p>
-                <p><strong>Date:</strong> ${data.formattedDate}</p> <!-- Display as "Month Dayth" -->
-            `;
-            resultsDiv.appendChild(resultDiv);
-        });
-
-        // Display total registrations at the top of results
-        const totalCountDiv = document.createElement('div');
-        totalCountDiv.innerHTML = `<p>Total Registrations: ${registrationCount}</p>`;
-        totalCountDiv.style.fontWeight = 'bold';
-        totalCountDiv.style.marginBottom = '10px';
-        resultsDiv.insertBefore(totalCountDiv, resultsDiv.firstChild);
-
-    } catch (error) {
-        console.error('Error fetching documents: ', error);
-    }
+occasionSelect.addEventListener('change', () => {
+  const showOther = occasionSelect.value === 'Others';
+  otherOccasionInput.hidden = !showOther;
+  otherOccasionInput.style.display = showOther ? 'block' : 'none';
+  otherOccasionInput.required = showOther;
 });
 
+function setLoading(active) {
+  loading.style.visibility = active ? 'visible' : 'hidden';
+  $('searchBtn').disabled = active;
+  $('exportBtn').disabled = active;
+}
+function ordinal(day) {
+  if (day > 3 && day < 21) return 'th';
+  return ({1:'st',2:'nd',3:'rd'})[day % 10] || 'th';
+}
+function appendField(card, label, value) {
+  const row = document.createElement('p');
+  const caption = document.createElement('strong');
+  caption.textContent = label + ': ';
+  row.append(caption, document.createTextNode(String(value ?? '')));
+  card.appendChild(row);
+}
 
-
-document.getElementById('exportBtn').addEventListener('click', () => {
-    loading.style.visibility = 'visible';
-    if (searchResults.length === 0) {
-        alert('No results to export.');
-        loading.style.visibility = 'hidden';
-        return;
+$('searchBtn').addEventListener('click', async () => {
+  const eventFilter = $('event').value;
+  const selectedOccasion = occasionSelect.value;
+  const occasionFilter = selectedOccasion === 'Others' ? otherOccasionInput.value.trim() : selectedOccasion;
+  const receiptFilter = $('receiptNumber').value.trim();
+  const monthFilter = $('monthFilter').value;
+  resultsDiv.replaceChildren();
+  searchResults = [];
+  setLoading(true);
+  try {
+    const snapshot = await getDocs(collection(db, 'submissions'));
+    snapshot.forEach((item) => {
+      const data = item.data();
+      const date = new Date(data.date);
+      if (Number.isNaN(date.getTime())) return;
+      const month = date.getMonth();
+      const day = date.getDate();
+      if (eventFilter && data.event !== eventFilter) return;
+      if (occasionFilter && data.occasion !== occasionFilter) return;
+      if (receiptFilter && String(data.receiptNumber ?? '') !== receiptFilter) return;
+      if (monthFilter && String(month + 1).padStart(2, '0') !== monthFilter) return;
+      const monthName = new Intl.DateTimeFormat('en-IN', {month:'long', timeZone:'Asia/Kolkata'}).format(date);
+      searchResults.push({...data, regDate:date, formattedDate:`${monthName} ${day}${ordinal(day)}`});
+    });
+    searchResults.sort((a,b)=>b.regDate-a.regDate);
+    const total = document.createElement('p');
+    total.className = 'results-count';
+    total.textContent = `Total registrations: ${searchResults.length}`;
+    resultsDiv.appendChild(total);
+    if (!searchResults.length) {
+      const empty = document.createElement('p');
+      empty.className = 'empty-state';
+      empty.textContent = 'No registrations match the selected filters.';
+      resultsDiv.appendChild(empty);
     }
+    searchResults.forEach((data) => {
+      const card = document.createElement('article');
+      card.className = 'result';
+      appendField(card, 'Receipt Number', data.receiptNumber);
+      appendField(card, 'Name', data.name);
+      appendField(card, 'Contact Number', data.mobileNumber);
+      appendField(card, 'Flat Number', data.flatNumber);
+      appendField(card, 'Event', data.event);
+      appendField(card, 'Occasion', data.occasion);
+      appendField(card, 'Date', data.formattedDate);
+      resultsDiv.appendChild(card);
+    });
+  } catch (error) {
+    console.error('Error fetching registration records:', error);
+    const message = document.createElement('p');
+    message.className = 'error-message';
+    message.setAttribute('role','alert');
+    message.textContent = 'Registration records could not be loaded. Please try again.';
+    resultsDiv.appendChild(message);
+  } finally {
+    setLoading(false);
+  }
+});
 
-    // Convert each registration date to a readable string (if needed)
-    const formattedResults = searchResults.map(result => ({
-        ...result,
-        regDate: result.regDate.toLocaleDateString() // Format the date object as a string
-    }));
-
-    // Convert the results into a sheet
-    const worksheet = XLSX.utils.json_to_sheet(formattedResults);
+$('exportBtn').addEventListener('click', () => {
+  if (!searchResults.length) {
+    alert('Run a search with matching records before exporting.');
+    return;
+  }
+  setLoading(true);
+  try {
+    const rows = searchResults.map(({regDate, ...record}) => ({...record, date:regDate.toLocaleDateString('en-IN')}));
+    const worksheet = XLSX.utils.json_to_sheet(rows);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Results');
-
-    // Write the workbook to a file
-    XLSX.writeFile(workbook, 'search_results.xlsx');
-    loading.style.visibility = 'hidden';
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Registrations');
+    XLSX.writeFile(workbook, 'temple-registration-search.xlsx');
+  } catch (error) {
+    console.error('Registration export failed:', error);
+    alert('The Excel file could not be created. Please try again.');
+  } finally {
+    setLoading(false);
+  }
 });
-
-    </script>
+</script>
 <script src="admin.js"></script>
 <script src="site-shell.js"></script></body>
 </html>

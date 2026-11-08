@@ -136,7 +136,9 @@
 <button class="admin-nav-button" onclick="window.location.href='event.html'">Event Info</button>
 </div>
 <div id="searchPanel">
+<label for="flatNumber">Flat number</label>
 <input id="flatNumber" placeholder="Enter Flat Number" type="text"/>
+<label for="filter">Show records</label>
 <select id="filter">
 <option value="all">All</option>
 <option value="residents">Residents</option>
@@ -271,7 +273,7 @@ if (!firebaseConfig || firebaseConfig.projectId === 'YOUR_STAGING_PROJECT_ID') t
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, 'Results');
             XLSX.writeFile(workbook, 'search_results.xlsx');
-            loading.style.visibility = 'visible';
+            loading.style.visibility = 'hidden';
         });
     </script>
 <script src="firebase-config.js"></script>
