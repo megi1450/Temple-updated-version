@@ -1,20 +1,11 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-auth.js';
-import { initializeAppCheck, ReCaptchaV3Provider } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app-check.js';
-import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-functions.js';
 import {
   getFirestore, doc, getDoc, getDocs, collection, runTransaction, serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
 
 const firebaseConfig = window.TEMPLE_FIREBASE_CONFIG;
-if (!firebaseConfig || firebaseConfig.projectId === 'YOUR_STAGING_PROJECT_ID') throw new Error('Configure firebase-config.js with the staging Firebase project before using donations.');
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth(app);
-if (!window.TEMPLE_APPCHECK_SITE_KEY || window.TEMPLE_APPCHECK_SITE_KEY.startsWith('YOUR_')) throw new Error('Configure the staging App Check site key.');
-initializeAppCheck(app, { provider: new ReCaptchaV3Provider(window.TEMPLE_APPCHECK_SITE_KEY), isTokenAutoRefreshEnabled: true });
-const waitForAuth = () => new Promise(resolve => { const unsubscribe = onAuthStateChanged(auth, user => { unsubscribe(); resolve(user); }); });
-const submitDonationCall = httpsCallable(getFunctions(app), 'submitDonation');
 const $ = (id) => document.getElementById(id);
 const pageLoader = $('pageLoader');
 const loaderText = $('loaderText');
@@ -61,18 +52,16 @@ function setStatus(message, isError) {
 }
 
 async function verifyResidentSession(flatNumber, residentName, email) {
-  const user = await waitForAuth();
-  if (!flatNumber || !residentName || !email || !user || !user.emailVerified) {
-    window.location.replace('resident-access.html');
+  if (!flatNumber || localStorage.getItem('input') !== 'true' || !residentName || !email) {
+    window.location.replace('index.html');
     return null;
   }
-  const token = await user.getIdTokenResult(true);
-  if (token.claims.role !== 'resident' || token.claims.flatNumber !== flatNumber) { window.location.replace('resident-access.html'); return null; }
-  const residentRef = doc(db, 'users', flatNumber, 'residents', user.uid);
+  const residentId = residentName.replace(/\s+/g, '_') + '_' + email;
+  const residentRef = doc(db, 'users', flatNumber, 'residents', residentId);
   const residentSnap = await getDoc(residentRef);
   if (!residentSnap.exists()) {
     localStorage.removeItem('input');
-    window.location.replace('resident-access.html');
+    window.location.replace('index.html');
     return null;
   }
   return residentSnap.data() || {};
@@ -117,6 +106,36 @@ async function loadHistory(flatNumber) {
     console.error('Unable to load donation history:', error);
     $('historyLoading').hidden = true;
     $('historyError').textContent = 'Donation history could not be loaded. Please refresh the page.';
+  }
+}
+
+async function requestSheetSync(record) {
+  const endpoint = window.DONATION_SHEETS_WEB_APP_URL;
+  if (!endpoint || !/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec(?:\?.*)?$/.test(endpoint)) {
+    console.info('Donation Sheet sync is not configured. Firestore donation record was saved.');
+    return;
+  }
+  try {
+    await fetch(endpoint, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+      body: JSON.stringify({
+        action: 'submit',
+        serialNumber: record.serialNumber,
+        name: record.name,
+        amount: record.amount,
+        flatNumber: record.flatNumber,
+        mobileNumber: record.mobileNumber,
+        donationType: record.donationType,
+        utrNumber: record.utrNumber,
+        date: record.date,
+        verificationStatus: record.verificationStatus || 'Pending manual verification',
+        verifiedAt: record.verifiedAt || ''
+      })
+    });
+  } catch (error) {
+    console.error('Donation details were saved in Firestore, but the Sheets sync request could not be sent:', error);
   }
 }
 
@@ -298,7 +317,7 @@ async function initializeDonationPage() {
   const residentName = localStorage.getItem('residentName');
   const email = localStorage.getItem('email');
   if (!flatNumber || localStorage.getItem('input') !== 'true') {
-    window.location.replace('resident-access.html');
+    window.location.replace('index.html');
     return;
   }
 
@@ -374,15 +393,54 @@ async function initializeDonationPage() {
     $('submitDonation').disabled = true;
     setLoading(true, 'Saving donation details securely...');
     try {
-      const response = await submitDonationCall({ amount, date, mobileNumber, donationType, utrNumber });
-      const receipt = response.data;
+      const donationId = 'UPI_' + utrNumber;
+      const donationRef = doc(db, 'Donations', donationId);
+      const flatDonationRef = doc(db, 'users', flat, 'Donations', donationId);
+      const counterRef = doc(db, 'receiptNumbers', 'donationsCounter');
+
+      const receipt = await runTransaction(db, async (transaction) => {
+        const duplicateSnap = await transaction.get(donationRef);
+        const counterSnap = await transaction.get(counterRef);
+        if (duplicateSnap.exists()) {
+          const duplicateError = new Error('This UPI reference has already been submitted.');
+          duplicateError.code = 'DUPLICATE_UPI';
+          throw duplicateError;
+        }
+        const previousValue = counterSnap.exists()
+          ? Number(counterSnap.data().lastSerialNumber || 0)
+          : 0;
+        const serialNumber = String(previousValue + 1).padStart(3, '0');
+        const record = {
+          serialNumber,
+          name,
+          amount,
+          date,
+          flatNumber: flat,
+          mobileNumber,
+          donationType,
+          utrNumber,
+          paymentMethod: 'UPI',
+          verificationStatus: 'Pending manual verification',
+          sheetSyncStatus: window.DONATION_SHEETS_WEB_APP_URL ? 'queued' : 'not_configured',
+          createdAt: serverTimestamp()
+        };
+        transaction.set(donationRef, record);
+        transaction.set(flatDonationRef, record);
+        transaction.set(counterRef, {
+          lastSerialNumber: previousValue + 1,
+          updatedAt: serverTimestamp()
+        });
+        return record;
+      });
+
+      await requestSheetSync(receipt);
       setLoading(false);
       showReceipt(receipt);
       await loadHistory(flat);
     } catch (error) {
       console.error('Donation submission failed:', error);
       setLoading(false);
-      if (error && (error.code === 'functions/already-exists' || error.code === 'DUPLICATE_UPI')) {
+      if (error && error.code === 'DUPLICATE_UPI') {
         setStatus('This UPI reference has already been submitted. Check your donation history or contact the Temple Committee.', true);
       } else {
         setStatus('The donation details could not be saved. Please try again. If this continues, contact the Temple Committee.', true);

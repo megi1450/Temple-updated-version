@@ -201,22 +201,10 @@
 </footer>
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
-import {getAuth,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-auth.js';
 import {getFirestore,collection,getDocs} from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
-const config=window.TEMPLE_FIREBASE_CONFIG;
-async function fetchRegistrationHistory(){
- const body=document.querySelector('#registrationTable tbody');if(!body)return;body.replaceChildren();
- if(!config||config.projectId==='YOUR_STAGING_PROJECT_ID'){const row=document.createElement('tr'),cell=document.createElement('td');cell.colSpan=6;cell.textContent='Staging Firebase is not configured.';row.append(cell);body.append(row);return;}
- try{const app=initializeApp(config),auth=getAuth(app);
- const user=await new Promise(resolve=>{const unsub=onAuthStateChanged(auth,value=>{unsub();resolve(value);});});if(!user||!user.emailVerified){location.replace('resident-access.html');return;}const token=await user.getIdTokenResult(true),flat=token.claims.flatNumber;if(token.claims.role!=='resident'||!flat){location.replace('resident-access.html');return;}const db=getFirestore(app),snapshot=await getDocs(collection(db,'users',flat,'registrations')),large=window.innerWidth>=601;
- snapshot.docs.sort((a,b)=>String(b.data().date||'').localeCompare(String(a.data().date||''))).forEach(item=>{const data=item.data(),row=document.createElement('tr');
- const addCell=(parent,value)=>{const td=document.createElement('td');td.textContent=String(value??'');parent.append(td);};
- if(large){[data.name,data.date,data.mobileNumber,data.event,data.occasion,data.receiptNumber].forEach(v=>addCell(row,v));}
- else{addCell(row,data.event);addCell(row,data.receiptNumber);const control=document.createElement('td'),toggle=document.createElement('button');toggle.type='button';toggle.className='toggle-button';toggle.textContent='+';toggle.setAttribute('aria-expanded','false');control.append(toggle);row.append(control);const details=document.createElement('td'),panel=document.createElement('div');panel.className='expandable-content';[['Name',data.name],['Date',data.date],['Mobile Number',data.mobileNumber],['Event',data.event],['Occasion',data.occasion],['Receipt No',data.receiptNumber]].forEach(([label,value])=>{const line=document.createElement('div'),strong=document.createElement('span'),text=document.createElement('span');strong.className='label';strong.textContent=label+': ';text.className='value';text.textContent=String(value??'');line.append(strong,text);panel.append(line);});details.append(panel);row.append(details);toggle.addEventListener('click',e=>{e.stopPropagation();const open=panel.classList.toggle('expanded');toggle.textContent=open?'−':'+';toggle.setAttribute('aria-expanded',String(open));});}
- body.append(row);});
- }catch(error){console.error('Registration history could not be loaded:',error);const row=document.createElement('tr'),cell=document.createElement('td');cell.colSpan=6;cell.textContent='Registration history could not be loaded. Please sign in again or refresh.';row.append(cell);body.append(row);}
-}
-fetchRegistrationHistory();window.addEventListener('resize',()=>{clearTimeout(window.__templeHistoryResize);window.__templeHistoryResize=setTimeout(fetchRegistrationHistory,150);});
+const c=window.TEMPLE_FIREBASE_CONFIG;
+async function loadHistory(){const body=document.querySelector('#registrationTable tbody');if(!body)return;body.replaceChildren();const flat=localStorage.getItem('flatNumber'),name=localStorage.getItem('residentName'),email=localStorage.getItem('email');if(localStorage.getItem('input')!=='true'||!flat||!name||!email){location.replace('login.html');return;}try{const db=getFirestore(initializeApp(c)),snap=await getDocs(collection(db,'users',flat,'registrations'));const rows=snap.docs.map(d=>d.data()).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));for(const d of rows){const tr=document.createElement('tr');[d.name,d.date,d.mobileNumber,d.event,d.occasion,d.receiptNumber].forEach(v=>{const td=document.createElement('td');td.textContent=String(v??'');tr.append(td);});body.append(tr);}if(!rows.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=6;td.textContent='No registrations found.';tr.append(td);body.append(tr);}}catch(e){console.error(e);const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=6;td.textContent='Could not load registration history. Please refresh.';tr.append(td);body.append(tr);}}
+loadHistory();
 </script>
 <script src="firebase-config.js"></script>
 <script src="site-shell.js"></script></body>

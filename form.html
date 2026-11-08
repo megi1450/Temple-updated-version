@@ -65,23 +65,17 @@
 </form>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
-import { getAuth } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-auth.js';
-import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-functions.js';
-import { initializeAppCheck, ReCaptchaV3Provider } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app-check.js';
-const config=window.TEMPLE_FIREBASE_CONFIG;
-if(!config||config.projectId==='YOUR_STAGING_PROJECT_ID'){alert('The staging Firebase project is not configured yet.');}
-else {
- const app=initializeApp(config);if(!window.TEMPLE_APPCHECK_SITE_KEY||window.TEMPLE_APPCHECK_SITE_KEY.startsWith('YOUR_'))throw new Error('Configure staging App Check.');initializeAppCheck(app,{provider:new ReCaptchaV3Provider(window.TEMPLE_APPCHECK_SITE_KEY),isTokenAutoRefreshEnabled:true});const auth=getAuth(app),submit=httpsCallable(getFunctions(app),'submitPujaRegistration');
- const form=document.getElementById('registrationForm'),occasion=document.getElementById('occasion'),other=document.getElementById('otherOccasion');
- occasion?.addEventListener('change',()=>{const visible=occasion.value==='Others';other.style.display=visible?'block':'none';other.required=visible;});
- form?.addEventListener('submit',async event=>{event.preventDefault();if(!form.reportValidity())return;const user=auth.currentUser;if(!user||!user.emailVerified){location.replace('resident-access.html');return;}
-  const token=await user.getIdTokenResult(true);if(token.claims.role!=='resident'){location.replace('resident-access.html');return;}
-  const name=document.getElementById('name').value.trim(),date=document.getElementById('date').value,mobileNumber=document.getElementById('mobileNumber').value.trim(),eventName=document.getElementById('event').value,occasionValue=occasion.value==='Others'?other.value.trim():occasion.value,button=form.querySelector('[type=submit]');
-  if(!occasionValue){other.focus();return;}button.disabled=true;button.textContent='Submitting…';
-  try{const response=await submit({name,date,mobileNumber,event:eventName,occasion:occasionValue});const record=response.data;const params=new URLSearchParams({receiptNumber:record.receiptNumber,name:record.name,date:record.date,flatNumber:record.flatNumber,mobileNumber:record.mobileNumber,event:record.event,occasion:record.occasion,registrationId:record.registrationId});location.href='receipt.html?'+params.toString();}
-  catch(error){console.error('Puja registration failed:',error);alert(error.code==='functions/already-exists'?'This registration already exists.':'Unable to submit your registration. Please try again.');button.disabled=false;button.textContent='Submit';}
- });
-}
+import { getFirestore, doc, runTransaction, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
+const app=initializeApp(window.TEMPLE_FIREBASE_CONFIG),db=getFirestore(app),flatNumber=localStorage.getItem('flatNumber');
+const form=document.getElementById('registrationForm'),occasionSelect=document.getElementById('occasion'),otherInput=document.getElementById('otherOccasion');
+occasionSelect?.addEventListener('change',()=>{const other=occasionSelect.value==='Others';otherInput.style.display=other?'block':'none';otherInput.required=other;});
+form?.addEventListener('submit',async event=>{event.preventDefault();if(!form.reportValidity())return;if(localStorage.getItem('input')!=='true'||!flatNumber){location.replace('login.html');return;}
+ const name=document.getElementById('name').value.trim(),date=document.getElementById('date').value,mobileNumber=document.getElementById('mobileNumber').value.trim(),eventName=document.getElementById('event').value,occasion=occasionSelect.value,otherOccasion=otherInput.value.trim(),finalOccasion=occasion==='Others'?otherOccasion:occasion;
+ if(!name||!date||!/^[6-9]\d{9}$/.test(mobileNumber)||!eventName||!finalOccasion){alert('Please check all registration details.');return;}
+ const registrationId=`${flatNumber}_${name}_${eventName}_${finalOccasion}`,submissionRef=doc(db,'submissions',registrationId),residentRef=doc(db,'users',flatNumber,'registrations',registrationId),counterRef=doc(db,'receiptNumbers','counter'),button=form.querySelector('[type=submit]');button.disabled=true;button.textContent='Submitting…';
+ try{const result=await runTransaction(db,async tx=>{const duplicate=await tx.get(submissionRef);const counter=await tx.get(counterRef);if(duplicate.exists())throw new Error('DUPLICATE_REGISTRATION');const last=counter.exists()?String(counter.data().lastReceiptNumber||'0000'):'0000';const receiptNumber=String(parseInt(last,10)+1).padStart(4,'0');const data={name,date,flatNumber,mobileNumber,event:eventName,occasion:finalOccasion,registrationId,createdAt:serverTimestamp(),receiptNumber};tx.set(submissionRef,data);tx.set(residentRef,data);tx.set(counterRef,{lastReceiptNumber:receiptNumber});return data;});const params=new URLSearchParams({receiptNumber:result.receiptNumber,name:result.name,date:result.date,flatNumber:result.flatNumber,mobileNumber:result.mobileNumber,event:result.event,occasion:result.occasion,registrationId:result.registrationId});location.href='receipt.html?'+params.toString();}
+ catch(error){console.error('Puja registration failed:',error);alert(error.message==='DUPLICATE_REGISTRATION'?'This registration already exists. Please check your registration history.':'The registration could not be saved. Please try again.');button.disabled=false;button.textContent='Submit';}
+});
 </script>
 <script src="firebase-config.js"></script>
 <script src="site-shell.js"></script></body>

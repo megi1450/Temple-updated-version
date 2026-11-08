@@ -62,15 +62,14 @@
 <body class="auth-page" data-page="pass.html">
 <div class="container">
 <h2>Administrator sign in</h2>
-<form id="adminLoginForm">
-<label for="email">Administrator email</label><input id="email" name="email" type="email" autocomplete="username" required/>
-<label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" required/>
+<input id="password" type="password" placeholder="Admin password" autocomplete="current-password" required/>
+<button type="button" onclick="pass()">Sign in</button>
 <p id="adminStatus" role="status" aria-live="polite"></p>
-<button type="submit">Sign in</button></form>
 <div class="footer">Access is restricted to authorized personnel only.</div>
 </div>
 <script src="firebase-config.js"></script>
 <script src="site-shell.js"></script>
-<script type="module" src="admin.js"></script>
+<script src="admin.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

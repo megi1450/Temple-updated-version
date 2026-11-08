@@ -1,17 +1,10 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-auth.js';
-import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-functions.js';
 import {
   getFirestore, doc, getDoc, getDocs, collection, runTransaction, serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
 
 const firebaseConfig = window.TEMPLE_FIREBASE_CONFIG;
-if (!firebaseConfig || firebaseConfig.projectId === 'YOUR_STAGING_PROJECT_ID') throw new Error('Configure firebase-config.js with the staging Firebase project before using this page.');
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-const manageDonationCall = httpsCallable(getFunctions(app), 'manageDonation');
-const waitForAuth = () => new Promise(resolve => { const unsubscribe = onAuthStateChanged(auth, user => { unsubscribe(); resolve(user); }); });
+const db = getFirestore(initializeApp(firebaseConfig));
 const $ = (id) => document.getElementById(id);
 const WHATSAPP_GROUP_URL = 'https://chat.whatsapp.com/BOurgzSlABs9vGatqsFbBc';
 let allDonations = [];
@@ -72,7 +65,10 @@ function statusOf(record) {
   return text(record.verificationStatus || 'Pending manual verification');
 }
 function isVerified(record) { return statusOf(record).toLowerCase() === 'verified'; }
-async function ensureAdmin() { const user = await waitForAuth(); if (!user || !user.emailVerified) return false; const token = await user.getIdTokenResult(true); return token.claims.role === 'admin'; }
+// The legacy Apps Script deployment validates this key for protected Sheet actions.
+// It is kept out of the UI by the user's request; note that any static-site key is public.
+const DONATION_SHEETS_ADMIN_KEY = 'deleteaccess';
+function getDonationAdminKey() { return DONATION_SHEETS_ADMIN_KEY; }
 
 function timestampText(value) {
   if (!value) return '';
@@ -95,8 +91,31 @@ function plainRecord(record) {
     adminNotes: text(record.adminNotes)
   };
 }
+async function requestSheetAction(action, record) {
+  const endpoint = window.DONATION_SHEETS_WEB_APP_URL;
+  const requiresAdminKey = ['verify', 'delete', 'sync'].includes(action);
+  const adminKey = getDonationAdminKey();
+  if (requiresAdminKey && !adminKey) return { sent: false, reason: 'Enter the Donation Sheet Admin Key first.' };
+  if (!endpoint || !endpoint.startsWith('https://script.google.com/macros/s/') || !endpoint.endsWith('/exec')) {
+    return { sent: false, reason: 'Google Sheets web app URL is not configured.' };
+  }
+  try {
+    await fetch(endpoint, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+      body: JSON.stringify({ action, ...(requiresAdminKey ? { adminKey } : {}), ...plainRecord(record) })
+    });
+    // Apps Script is called in no-cors mode, so the browser cannot inspect the response body.
+    // "sent" means the request left this page; it is not a server-side acknowledgement.
+    return { sent: true };
+  } catch (error) {
+    console.error('Google Sheets sync request failed:', error);
+    return { sent: false, reason: 'The Google Sheets sync request could not be sent.' };
+  }
+}
 async function loadDonations() {
-  if (!(await ensureAdmin())) { window.location.replace('pass.html'); return; }
+  if (sessionStorage.getItem('login') !== 'true') { window.location.replace('pass.html'); return; }
   $('refreshButton').disabled = true;
   setMessage('Loading donation recordsâ¦');
   $('donationRows').replaceChildren();
@@ -261,7 +280,11 @@ function openDetails(record) {
   $('detailsDialog').showModal();
 }
 async function verifyDonation(record, button) {
-  if (!(await ensureAdmin())) { window.location.replace('pass.html'); return; }
+  if (!getDonationAdminKey()) { setMessage('Enter the Donation Sheet Admin Key first; no record was changed.', true); return; }
+  if (sessionStorage.getItem('login') !== 'true') {
+    window.location.replace('pass.html');
+    return;
+  }
   if (isVerified(record)) {
     setMessage('This receipt is already marked Verified.');
     return;
@@ -275,11 +298,25 @@ async function verifyDonation(record, button) {
   );
   setMessage('Verification is in progress for receipt ' + text(record.serialNumber) + '. Please do not click again.');
   try {
-    const response = await manageDonationCall({ action: 'verify', utrNumber: record.utrNumber });
-    const updated = { ...record, verificationStatus: 'Verified', verifiedAt: new Date(), verifiedBy: auth.currentUser.uid };
+    const rootRef = doc(db, 'Donations', record.id);
+    const flatRef = doc(db, 'users', text(record.flatNumber), 'Donations', record.id);
+    await runTransaction(db, async (transaction) => {
+      const rootSnap = await transaction.get(rootRef);
+      if (!rootSnap.exists()) throw new Error('This donation no longer exists in Firestore.');
+      const flatSnap = await transaction.get(flatRef);
+      const update = {
+        verificationStatus: 'Verified',
+        verifiedAt: serverTimestamp(),
+        verifiedBy: 'Temple Admin',
+        updatedAt: serverTimestamp()
+      };
+      transaction.update(rootRef, update);
+      if (flatSnap.exists()) transaction.update(flatRef, update);
+    });
+    const updated = { ...record, verificationStatus: 'Verified', verifiedAt: new Date(), verifiedBy: 'Temple Admin' };
     allDonations = allDonations.map((item) => item.id === record.id ? updated : item);
     currentDetails = updated;
-    const sync = response.data.sheet || { sent: false, reason: 'Sheet status unavailable.' };
+    const sync = await requestSheetAction('verify', updated);
     renderDonations();
     if ($('detailsDialog').open) openDetails(updated);
     setMessage(sync.sent
@@ -293,15 +330,16 @@ async function verifyDonation(record, button) {
   }
 }
 async function syncOneRecord(record, button) {
-  if (!(await ensureAdmin())) { window.location.replace('pass.html'); return; }
+  if (sessionStorage.getItem('login') !== 'true') { window.location.replace('pass.html'); return; }
+  if (!getDonationAdminKey()) { setMessage('Enter the Donation Sheet Admin Key first.', true); return; }
   const finishProgress = startActionProgress(
     button,
     'Syncing…',
     'Syncing receipt ' + text(record.serialNumber) + ' with Google Sheets. Please wait…'
   );
   try {
-    const response = await manageDonationCall({ action: 'sync', utrNumber: record.utrNumber });
-    const sync = response.data.sheet || { sent: false, reason: 'Sheet status unavailable.' };
+    const action = isVerified(record) ? 'verify' : 'sync';
+    const sync = await requestSheetAction(action, record);
     setMessage(sync.sent
       ? 'Google Sheets sync request sent for receipt ' + text(record.serialNumber) + '. Refresh the sheet to confirm the update.'
       : sync.reason, !sync.sent);
@@ -312,7 +350,8 @@ async function syncOneRecord(record, button) {
   }
 }
 async function deleteDonation(record, button) {
-  if (!(await ensureAdmin())) { window.location.replace('pass.html'); return; }
+  if (sessionStorage.getItem('login') !== 'true') { window.location.replace('pass.html'); return; }
+  if (!getDonationAdminKey()) { setMessage('Enter the Donation Sheet Admin Key first; no record was deleted.', true); return; }
   if (!window.confirm(
     'Permanently delete receipt ' + text(record.serialNumber) + ' (UPI reference ' + text(record.utrNumber) + ')?\n\n' +
     'This deletes its root and per-flat donation records in Firestore and requests row deletion in Google Sheets. The receipt serial remains retired and will not be reused.'
@@ -325,10 +364,18 @@ async function deleteDonation(record, button) {
   );
   setMessage('Deletion is in progress for receipt ' + text(record.serialNumber) + '. Please do not click again.');
   try {
-    const response = await manageDonationCall({ action: 'delete', utrNumber: record.utrNumber });
-    const sync = response.data.sheet || { sent: false, reason: 'Sheet status unavailable.' };
+    const rootRef = doc(db, 'Donations', record.id);
+    const flatRef = doc(db, 'users', text(record.flatNumber), 'Donations', record.id);
+    await runTransaction(db, async (transaction) => {
+      const rootSnap = await transaction.get(rootRef);
+      const flatSnap = await transaction.get(flatRef);
+      if (rootSnap.exists()) transaction.delete(rootRef);
+      if (flatSnap.exists()) transaction.delete(flatRef);
+      if (!rootSnap.exists() && !flatSnap.exists()) throw new Error('The donation was already deleted from Firestore.');
+    });
     allDonations = allDonations.filter((item) => item.id !== record.id);
     if ($('detailsDialog').open) $('detailsDialog').close();
+    const sync = await requestSheetAction('delete', record);
     renderDonations();
     setMessage(sync.sent
       ? 'Receipt ' + text(record.serialNumber) + ' was deleted from Firestore. A Google Sheets row-deletion request was sent; refresh the sheet to confirm.'

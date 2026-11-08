@@ -1,12 +1,9 @@
-// Fill this file with the Web App settings from the separate staging Firebase project.
-// This test site must never point to a live production project.
+// Existing main temple Firebase project. This is the same project used by Temple-Website.
 window.TEMPLE_FIREBASE_CONFIG = {
-  apiKey: 'YOUR_STAGING_WEB_API_KEY',
-  authDomain: 'YOUR_STAGING_PROJECT.firebaseapp.com',
-  projectId: 'YOUR_STAGING_PROJECT_ID',
-  storageBucket: 'YOUR_STAGING_PROJECT.appspot.com',
-  messagingSenderId: 'YOUR_STAGING_SENDER_ID',
-  appId: 'YOUR_STAGING_APP_ID'
+  apiKey: 'AIzaSyBKtqm0KzMmX4cCqT3PhGI2aFcF3LSXnEk',
+  authDomain: 'ao-temple.firebaseapp.com',
+  projectId: 'ao-temple',
+  storageBucket: 'ao-temple.appspot.com',
+  messagingSenderId: '426167530682',
+  appId: '1:426167530682:web:848a4cb0ceee2ce05cfe83'
 };
-
-window.TEMPLE_APPCHECK_SITE_KEY = 'YOUR_STAGING_RECAPTCHA_V3_SITE_KEY';

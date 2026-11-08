@@ -1,5 +1,4 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-auth.js';
 import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
 
 const firebaseConfig = window.TEMPLE_FIREBASE_CONFIG;
@@ -12,19 +11,13 @@ const residentDocId = localStorage.getItem('residentDocId') || `${residentName.r
 function show(id, value) { const el=$(id); if(el) el.textContent=value || '—'; }
 function formatDate(value) { const date = value ? new Date(value) : null; return date && !Number.isNaN(date.getTime()) ? new Intl.DateTimeFormat(undefined,{day:'2-digit',month:'long',year:'numeric'}).format(date) : ''; }
 
-if (!flatNumber || !residentName || !email || !firebaseConfig || firebaseConfig.projectId === 'YOUR_STAGING_PROJECT_ID') {
-  location.replace('resident-access.html');
+if (!flatNumber || !residentName || !email || localStorage.getItem('input') !== 'true') {
+  location.replace('login.html');
 } else {
   show('profileName', residentName); show('profileFlat', flatNumber); show('profileEmail', email);
   try {
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const user = await new Promise(resolve => { const unsubscribe = onAuthStateChanged(auth, value => { unsubscribe(); resolve(value); }); });
-    if (!user || !user.emailVerified) throw new Error('Please sign in again.');
-    const token = await user.getIdTokenResult(true);
-    if (token.claims.role !== 'resident' || token.claims.flatNumber !== flatNumber) throw new Error('Resident access is not authorized.');
-    const db = getFirestore(app);
-    const ref = doc(db, 'users', flatNumber, 'residents', user.uid);
+    const db = getFirestore(initializeApp(firebaseConfig));
+    const ref = doc(db, 'users', flatNumber, 'residents', residentDocId);
     const snapshot = await getDoc(ref);
     if (snapshot.exists()) {
       const data = snapshot.data();
