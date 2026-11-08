@@ -93,6 +93,7 @@
     if(document.body.dataset.shellReady==='true')return;
     document.body.dataset.shellReady='true';
     document.body.classList.add('page-'+file.replace(/[^a-z0-9]+/g,'-'));
+    if(!document.querySelector('link[data-temple-ux]')){const ux=document.createElement('link');ux.rel='stylesheet';ux.href='ux-improvements.css';ux.dataset.templeUx='true';document.head.appendChild(ux);}
     if(['main.html','index.html','events.html','gallery.html','announcements.html','committee.html','terms.html','404.html'].includes(file))document.body.dataset.area='public';
     if(residentPages.has(file))document.body.dataset.area='resident';
     if(adminPages.has(file)||file==='pass.html')document.body.dataset.area='admin';

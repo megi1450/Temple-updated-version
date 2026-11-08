@@ -17,6 +17,9 @@ const messages={
   failed:{en:'We could not complete this request. Please try again.',kn:'ಈ ವಿನಂತಿಯನ್ನು ಪೂರ್ಣಗೊಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.'}
 };
 const language=()=>localStorage.getItem('templeLanguage')==='kn'?'kn':'en';
+const flatInput=form?.elements?.namedItem('flatNumber');
+if(flatInput){flatInput.addEventListener('input',()=>{const clean=flatInput.value.replace(/\s+/g,'').toUpperCase();if(flatInput.value!==clean)flatInput.value=clean;if(status){status.classList.remove('is-visible');status.textContent='';delete status.dataset.key;}});}
+form?.querySelectorAll('input').forEach(input=>input.addEventListener('input',()=>{if(status?.classList.contains('is-visible')){status.classList.remove('is-visible');status.textContent='';delete status.dataset.key;}}));
 function show(key,tone='error'){status.dataset.key=key;status.dataset.tone=tone;status.textContent=messages[key][language()];status.classList.add('is-visible');}
 function refreshStatus(){if(status.dataset.key)status.textContent=messages[status.dataset.key][language()];}
 function setBusy(busy){form.querySelectorAll('input,button').forEach(el=>el.disabled=busy);form.querySelector('button').setAttribute('aria-busy',String(busy));}

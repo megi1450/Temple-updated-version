@@ -40,11 +40,11 @@
     </style>
 <link href="redesign.css" rel="stylesheet"/></head>
 <body data-area="resident" data-page="form.html" onload="checksignin()">
-<form id="registrationForm">
-<h2>Registration Form</h2>
-<input id="name" placeholder="Name" required="" type="text"/>
+<form id="registrationForm" class="portal-form" aria-labelledby="registrationTitle">
+<div class="portal-form__heading"><span class="section-kicker">RESIDENT SERVICES</span><h2 id="registrationTitle">Register for a Puja or Seva</h2><p>Choose your preferred date and service. Your receipt details will be shown after successful submission.</p></div>
+<input id="name" placeholder="Full name" required type="text" autocomplete="name"/>
 <input id="date" placeholder="Select Date" required="" type="date"/>
-<input id="mobileNumber" placeholder="Mobile Number" required="" type="text"/>
+<input id="mobileNumber" placeholder="10-digit mobile number" required type="tel" inputmode="numeric" maxlength="10" pattern="[6-9][0-9]{9}" autocomplete="tel"/>
 <select id="event" required="">
 <option disabled="" selected="" value="">Event...</option>
 <option value="PANCHAMRIT ABHISHEKA">PANCHAMRIT ABHISHEKA</option>
@@ -61,7 +61,7 @@
 <option value="Others">Others</option>
 </select>
 <input id="otherOccasion" placeholder="If Others, please specify" style="display:none;" type="text"/>
-<button type="submit">Submit</button>
+<button class="portal-submit" type="submit">Continue to confirmation</button><p class="portal-form__note">Please check your details before submitting. If you need assistance, contact the temple committee.</p>
 </form>
 <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
