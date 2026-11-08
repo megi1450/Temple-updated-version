@@ -10,7 +10,7 @@ Serve this folder with any static HTTP server. Open `index.html` for the public 
 
 ## Important security note
 
-The legacy resident and administrator access flows use client-side storage/session checks. These are not a substitute for secure authentication and server-side authorisation. Do not treat this static-site access control as production-grade security. The Firebase project configuration is retained for compatibility. The copied GitHub Actions deployment workflow has been disabled; this repository does not deploy automatically or manually to the live Firebase project. Any future deployment requires a separate review and explicit approval.
+The legacy resident and administrator access flows use client-side storage/session checks. These are not a substitute for secure authentication and server-side authorisation. Do not treat this static-site access control as production-grade security. The Firebase Hosting configuration is retained, but this copy has no default Firebase project configured. The copied GitHub Actions deployment workflow has been disabled. Do not point this repository at the live `ao-temple` project or deploy it until a separate staging/production plan is approved.
 
 ## Assets
 
