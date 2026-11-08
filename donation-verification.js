@@ -117,13 +117,13 @@ async function requestSheetAction(action, record) {
 async function loadDonations() {
   if (sessionStorage.getItem('login') !== 'true') { window.location.replace('pass.html'); return; }
   $('refreshButton').disabled = true;
-  setMessage('Loading donation recordsâ¦');
+  setMessage('Loading donation records…');
   $('donationRows').replaceChildren();
   const loadingRow = document.createElement('tr');
   const loadingCell = document.createElement('td');
   loadingCell.colSpan = 8;
   loadingCell.className = 'empty';
-  loadingCell.textContent = 'Loading donation recordsâ¦';
+  loadingCell.textContent = 'Loading donation records…';
   loadingRow.appendChild(loadingCell);
   $('donationRows').appendChild(loadingRow);
   try {
@@ -219,11 +219,11 @@ function renderDonations() {
   }
   records.forEach((record) => {
     const row = document.createElement('tr');
-    addCell(row, record.serialNumber || 'â', 'receipt-id');
-    addCell(row, record.name || 'â');
-    addCell(row, record.flatNumber || 'â');
-    addCell(row, record.date || 'â');
-    addCell(row, record.utrNumber || 'â');
+    addCell(row, record.serialNumber || '—', 'receipt-id');
+    addCell(row, record.name || '—');
+    addCell(row, record.flatNumber || '—');
+    addCell(row, record.date || '—');
+    addCell(row, record.utrNumber || '—');
     const statusCell = document.createElement('td');
     const pill = document.createElement('span');
     pill.className = 'pill' + (isVerified(record) ? ' verified' : '');
@@ -268,7 +268,7 @@ function openDetails(record) {
     const caption = document.createElement('span');
     caption.textContent = label;
     const strong = document.createElement('strong');
-    strong.textContent = text(value) || 'â';
+    strong.textContent = text(value) || '—';
     wrap.append(caption, strong);
     grid.appendChild(wrap);
   });

@@ -1,4 +1,4 @@
-/* Shri Varasiddhi Vinayaka Temple Ã¢ÂÂ unified site design system */
+/* Shri Varasiddhi Vinayaka Temple — unified site design system */
 :root{
   --temple-ink:#282522;--temple-muted:#716a63;--temple-paper:#faf7f1;--temple-surface:#fff;
   --temple-wine:#642d38;--temple-wine-deep:#421e27;--temple-gold:#b28b52;--temple-gold-pale:#f3e8d7;
@@ -36,7 +36,7 @@ p{max-width:75ch}
 .site-nav>a:hover,.nav-dropdown>summary:hover,.site-nav>a[aria-current="page"]{background:#f4eee5;color:var(--temple-wine)}
 .nav-dropdown{position:relative}
 .nav-dropdown>summary::-webkit-details-marker{display:none}
-.nav-dropdown>summary:after{content:'Ã¢ÂÂ';margin-left:6px;color:var(--temple-gold)}
+.nav-dropdown>summary:after{content:'⌄';margin-left:6px;color:var(--temple-gold)}
 .nav-dropdown__menu{position:absolute;top:calc(100% + 8px);left:0;z-index:30;display:grid;min-width:210px;padding:8px;background:#fff;border:1px solid var(--temple-line);border-radius:13px;box-shadow:var(--temple-shadow)}
 .nav-dropdown__menu a{padding:10px 12px;border-radius:8px;color:var(--temple-ink);font-size:12px;text-decoration:none}
 .nav-dropdown__menu a:hover{background:#f7f1e8;color:var(--temple-wine)}
@@ -332,3 +332,93 @@ body>.site-header .site-header__inner{width:calc(100% - 36px)!important;max-widt
  .registration-page .portal-form__heading p{font-size:13px!important;line-height:1.65!important}
 }
 @media(max-width:380px){.registration-page{width:calc(100% - 20px)!important}.registration-page #registrationForm.portal-form{padding:17px 14px!important}.events-page>.container{width:calc(100% - 22px)!important}}
+
+
+/* FINAL RESPONSIVE SYSTEM — shared header, public pages and resident registration */
+.site-header{width:100%;max-width:100%;}
+.site-header__inner{min-width:0;}
+.site-brand{min-width:0;max-width:100%;}
+.site-brand__name{overflow-wrap:normal;}
+.site-nav{min-width:0;}
+.site-topline{width:100%;box-sizing:border-box;}
+.site-content{min-width:0;}
+
+/* Pujas & Sevas: consistent centered content and clean table/card presentation */
+.site-content.events-page{width:min(980px,calc(100% - 48px))!important;max-width:980px!important;margin:0 auto 56px!important;padding:0 0 48px!important;box-sizing:border-box!important;}
+.events-page .events-intro-copy{width:100%;max-width:860px;margin:0 auto 30px;padding:clamp(18px,3vw,28px);border:1px solid var(--temple-line);border-radius:18px;background:#f5eee5;color:var(--temple-muted);font-size:clamp(14px,1.7vw,17px);font-weight:650;line-height:1.75;text-align:center;box-sizing:border-box;}
+.events-page .events-section{width:100%;min-width:0;margin:0;padding:0!important;}
+.events-page .events-section>.container{width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important;padding:0!important;box-sizing:border-box!important;}
+.events-page .events-section h2{margin:0 0 18px!important;color:var(--temple-wine-deep);font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.65rem,3vw,2.2rem);text-align:left!important;}
+.events-page table.events-table{display:table;width:100%!important;max-width:100%!important;min-width:0!important;margin:0;border:1px solid var(--temple-line);border-collapse:separate!important;border-spacing:0!important;border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 12px 34px rgba(47,34,28,.06);table-layout:fixed;}
+.events-page .events-table th{padding:17px 20px;background:var(--temple-wine-deep);color:#fff;font-size:12px;font-weight:800;letter-spacing:.06em;text-align:left;}
+.events-page .events-table th:last-child,.events-page .events-table td:last-child{width:145px;text-align:center;}
+.events-page .events-table td{padding:20px;border-bottom:1px solid #eee8df;color:var(--temple-ink);font-size:14px;line-height:1.75;vertical-align:middle;overflow-wrap:anywhere;}
+.events-page .events-table tr:last-child td{border-bottom:0;}
+.events-page .event-name-en{font-size:13px;font-weight:650;color:var(--temple-wine-deep);}
+.events-page .event-note{color:var(--temple-muted);font-size:12px;}
+.events-page .event-register{display:inline-flex;align-items:center;justify-content:center;min-height:42px;margin-top:10px;padding:0 18px;border:0;border-radius:11px;background:var(--temple-wine);color:#fff;font-size:13px;font-weight:750;white-space:nowrap;box-shadow:0 5px 14px rgba(99,43,53,.13);}
+.events-page .event-register:hover{background:var(--temple-wine-deep);color:#fff;transform:translateY(-1px);}
+
+/* Registration form: no legacy body padding, no duplicate title, consistent fields */
+.site-content.registration-page{width:min(760px,calc(100% - 48px))!important;max-width:760px!important;margin:0 auto 56px!important;padding:0 0 48px!important;box-sizing:border-box!important;}
+.registration-page #registrationForm.portal-form{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:15px!important;width:100%!important;max-width:100%!important;margin:18px auto!important;padding:clamp(22px,4vw,36px)!important;border:1px solid var(--temple-line)!important;border-radius:20px!important;background:#fff!important;box-shadow:var(--temple-shadow)!important;box-sizing:border-box!important;}
+.registration-page .portal-form__heading{margin:0 0 3px!important;}
+.registration-page .portal-form__heading h1{margin:8px 0 9px!important;color:var(--temple-wine-deep);font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.65rem,4vw,2.2rem);line-height:1.2;}
+.registration-page .portal-form__heading p{margin:0;color:var(--temple-muted);font-size:14px;line-height:1.7;}
+.registration-page .form-field{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;min-width:0;}
+.registration-page .form-field label{margin:0!important;color:var(--temple-wine-deep);font-size:13px;font-weight:750;}
+.registration-page #registrationForm input,.registration-page #registrationForm select{width:100%!important;max-width:100%!important;min-width:0!important;min-height:48px!important;margin:0!important;padding:11px 14px!important;border:1px solid #ded5ca!important;border-radius:11px!important;background:#fff!important;color:var(--temple-ink)!important;font-size:16px!important;box-sizing:border-box!important;}
+.registration-page #registrationForm input:focus,.registration-page #registrationForm select:focus{border-color:var(--temple-gold)!important;outline:3px solid rgba(178,139,82,.16)!important;}
+.registration-page #registrationForm .portal-submit{width:100%;min-height:48px;margin:4px 0 0;padding:12px 18px;border:0;border-radius:12px;background:var(--temple-wine);color:#fff;font-size:14px;font-weight:800;}
+.registration-page .portal-form__note{margin:0;color:var(--temple-muted);font-size:12px;line-height:1.6;}
+
+@media(max-width:680px){
+  /* A fixed three-column header prevents language/account/menu controls wrapping off-screen. */
+  body>.site-header{width:100%!important;max-width:100%!important;}
+  body>.site-header .site-topline{display:flex;justify-content:space-between;gap:8px;padding:5px 12px!important;font-size:8px!important;letter-spacing:.045em!important;line-height:1.35;}
+  body>.site-header .site-topline span{min-width:0;}
+  body>.site-header .site-topline span:last-child{text-align:right;}
+  body>.site-header .site-header__inner{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;grid-template-rows:auto auto!important;align-items:center!important;column-gap:7px!important;row-gap:0!important;width:calc(100% - 28px)!important;max-width:1320px!important;min-width:0!important;min-height:68px!important;margin:0 auto!important;padding:8px 0!important;box-sizing:border-box!important;}
+  body>.site-header .site-brand{grid-column:1!important;grid-row:1!important;display:flex!important;flex:initial!important;min-width:0!important;width:100%!important;gap:7px!important;}
+  body>.site-header .site-brand img{width:36px!important;height:36px!important;flex:0 0 36px!important;}
+  body>.site-header .site-brand__name{font-size:12px!important;line-height:1.12!important;white-space:normal!important;}
+  body>.site-header .site-brand__sub{margin-top:3px!important;font-size:7px!important;letter-spacing:.14em!important;}
+  body>.site-header .site-actions{grid-column:2!important;grid-row:1!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:5px!important;width:auto!important;min-width:0!important;margin:0!important;}
+  body>.site-header .site-actions .language-button{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:auto!important;min-width:58px!important;min-height:36px!important;padding:0 8px!important;border-radius:999px!important;font-size:10px!important;white-space:nowrap!important;}
+  body>.site-header .account-button{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:36px!important;min-width:36px!important;height:36px!important;min-height:36px!important;padding:2px!important;}
+  body>.site-header .account-avatar{width:29px!important;height:29px!important;}
+  body>.site-header .account-label{display:none!important;}
+  body>.site-header .nav-toggle{grid-column:3!important;grid-row:1!important;display:grid!important;place-items:center!important;width:36px!important;min-width:36px!important;height:36px!important;min-height:36px!important;padding:0!important;border:1px solid var(--temple-line)!important;border-radius:11px!important;background:#fff!important;color:var(--temple-wine)!important;font-size:20px!important;line-height:1!important;}
+  body>.site-header .site-nav{grid-column:1/-1!important;grid-row:2!important;display:none!important;flex:initial!important;width:100%!important;min-width:0!important;padding:8px 0 10px!important;align-items:stretch!important;flex-direction:column!important;gap:2px!important;}
+  body>.site-header.menu-open .site-nav{display:flex!important;}
+  body>.site-header .site-nav>a,body>.site-header .nav-dropdown>summary{justify-content:flex-start!important;min-height:42px!important;padding:10px 12px!important;font-size:13px!important;white-space:normal!important;}
+  body>.site-header .nav-dropdown__menu{position:static!important;margin:0 8px 8px!important;box-shadow:none!important;}
+  .site-content.events-page{width:calc(100% - 28px)!important;max-width:760px!important;margin:0 auto 38px!important;padding:0 0 32px!important;}
+  .events-page .events-intro-copy{margin:0 auto 24px;padding:17px 16px;border-radius:15px;font-size:13px;line-height:1.7;}
+  .events-page .events-section h2{margin:0 0 14px!important;font-size:1.65rem!important;}
+  .events-page table.events-table{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;}
+  .events-page .events-table thead{display:none!important;}
+  .events-page .events-table tbody{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important;width:100%!important;}
+  .events-page .events-table tr{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;grid-template-rows:auto auto!important;align-items:start!important;gap:8px 12px!important;width:100%!important;min-width:0!important;padding:16px!important;border:1px solid var(--temple-line)!important;border-radius:16px!important;background:#fff!important;box-shadow:0 7px 22px rgba(47,34,28,.05)!important;box-sizing:border-box!important;}
+  .events-page .events-table td{display:block!important;width:auto!important;min-width:0!important;max-width:100%!important;padding:0!important;border:0!important;background:transparent!important;font-size:12px!important;line-height:1.7!important;overflow-wrap:anywhere!important;}
+  .events-page .events-table td:first-child{grid-column:1/-1!important;grid-row:2!important;color:var(--temple-ink)!important;}
+  .events-page .events-table td:last-child{grid-column:2!important;grid-row:1!important;justify-self:end!important;align-self:start!important;width:auto!important;padding:5px 10px!important;border-radius:999px!important;background:#f4ecdf!important;color:var(--temple-wine-deep)!important;font-size:12px!important;font-weight:850!important;white-space:nowrap!important;text-align:center!important;}
+  .events-page .event-name-en{font-size:12px!important;}
+  .events-page .event-note{font-size:11px!important;}
+  .events-page .event-register{min-height:42px!important;margin-top:9px!important;padding:0 16px!important;font-size:12px!important;}
+  .site-content.registration-page{width:calc(100% - 28px)!important;max-width:680px!important;margin:0 auto 36px!important;padding:0 0 30px!important;}
+  .registration-page #registrationForm.portal-form{margin:16px auto!important;padding:20px 17px!important;border-radius:17px!important;gap:13px!important;}
+  .registration-page .portal-form__heading h1{font-size:clamp(1.55rem,6vw,1.9rem)!important;}
+  .registration-page .portal-form__heading p{font-size:13px!important;line-height:1.65!important;}
+  .registration-page #registrationForm input,.registration-page #registrationForm select{min-height:46px!important;}
+}
+@media(max-width:360px){
+  body>.site-header .site-header__inner{width:calc(100% - 20px)!important;column-gap:5px!important;}
+  body>.site-header .site-brand img{width:32px!important;height:32px!important;flex-basis:32px!important;}
+  body>.site-header .site-brand__name{font-size:11px!important;}
+  body>.site-header .site-brand__sub{font-size:6px!important;}
+  body>.site-header .site-actions{gap:4px!important;}
+  body>.site-header .site-actions .language-button{min-width:52px!important;min-height:34px!important;padding:0 6px!important;font-size:9px!important;}
+  body>.site-header .account-button,body>.site-header .nav-toggle{width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;}
+  .site-content.events-page,.site-content.registration-page{width:calc(100% - 20px)!important;}
+}

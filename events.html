@@ -1,72 +1,37 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="ie=edge" http-equiv="X-UA-Compatible"/>
-<title>Pujas &amp; Sevas | Shri Varasiddhi Vinayaka Temple</title>
-<link href="styles.css" rel="stylesheet"/>
-<link href="assets/branding/logos/logo.png" rel="icon"/>
-<link href="redesign.css" rel="stylesheet"/></head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#632b35">
+  <title>Pujas &amp; Sevas | Shri Varasiddhi Vinayaka Temple</title>
+  <link rel="icon" href="assets/branding/logos/logo.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="redesign.css">
+</head>
 <body data-area="public" data-page="events.html" onload="checksignin()">
-<div class="hamburger2">
-<img class="hlogo" src="assets/branding/logos/logo3.avif" alt="Shri Varasiddhi Vinayaka Temple logo"/>Â Â <p>Shri Varasiddhi Vinayaka Temple</p>
-</div>
-<main class="site-content events-page">
-<div style="width: 100%; align-items: center; justify-items: center;">
-<div class="hamburger" onclick="home()">ð ï¸ Go to Home</div>
-</div>
-<!-- Puja Events Section -->
-<div style="width: 100%; align-items: center; justify-content: center; text-align: center;">
-<p style="font-weight: bold;">We encourage everyone to register for the seva mentioned below to support the temple's daily activities and ensure they run smoothly.</p>
-</div>
-<section class="events-section" id="events">
-<div class="container">
-<h2>Puja Events</h2>
-<table class="events-table">
-<thead>
-<tr>
-<th>à²¸à³à²µà³à²à²³à³ | SERVICES</th>
-<th>à²®à³à²¤à³à²¤ | AMOUNT</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>à²ªà²à²à²¾à²®à³à²¤ à²à²­à²¿à²·à³à²<br/>PANCHAMRIT ABHISHEKA<br/><button onclick="link()" style="background-color: blue; color: white; font-weight: bold;">Register Here</button></td>
-<td>â¹351</td>
-</tr>
-<tr>
-<td>à²¨à²¿à²°à²à²¤à²° à²à²­à²¿à²·à³à² (à²¶à²¾à²¶à³à²µà²¤ à²ªà³à²à³)<br/>NIRANTARA ABHISHEKA (SASHWATA PUJE)<br/>Note: This seva is performed in your name on special days, such as birthdays or anniversaries, with lifetime payment.<br/><button onclick="link()" style="background-color: blue; color: white; font-weight: bold;">Register Here</button></td>
-<td>â¹1,501</td>
-</tr>
-<tr>
-<td>à²¸à²à²à²·à³à²à²¹à²° à²à²¤à³à²°à³à²¥à³<br/>SANKASHTAHARA CHATURTHI<br/><button onclick="link3()" style="background-color: blue; color: white; font-weight: bold;">Register Here</button></td>
-<td>â¹101</td>
-</tr>
-<tr>
-<td>à²¶à³à²°à³ à²¸à²¤à³à²¯à²¨à²¾à²°à²¾à²¯à²£ à²ªà³à²à³ à²¸à²¾à²®à³à²¹à²¿à²<br/>SHRI SATYANARAYANA PUJA GROUP CEREMONY<br/>Note: This Seva is performed on the Poornima (full moon day) of every month.<br/><button onclick="link2()" style="background-color: blue; color: white; font-weight: bold;">Register Here</button></td>
-<td>â¹201</td>
-</tr>
-<tr>
-<td>à²µà²¾à²¹à²¨ à²ªà³à²à³ (à²¦à³à²µà²¿à²à²à³à²°)<br/>VEHICLE PUJA (TWO-WHEELER)<br/><button onclick="link()" style="background-color: blue; color: white; font-weight: bold;">Register Here</button></td>
-<td>â¹101</td>
-</tr>
-<tr>
-<td>à²µà²¾à²¹à²¨ à²ªà³à²à³ (à²¨à²¾à²²à³à²à³ à²à²à³à²°)<br/>VEHICLE PUJA (FOUR-WHEELER)<br/><button onclick="link()" style="background-color: blue; color: white; font-weight: bold;">Register Here</button></td>
-<td>â¹201</td>
-</tr>
-</tbody>
-</table>
-<br/>
-<br/>
-</div>
-</section>
-</main>
-<!-- Footer Section -->
-<footer class="main-footer">
-<div class="container">
-<p>Â© 2024 Shri Varasiddhi Vinayaka Arvind Oasis Temple Committee | All Rights Reserved</p>
-</div>
-</footer>
-<script src="site-shell.js"></script></body>
-<script src="script.js"></script>
+  <main class="site-content events-page">
+    <div class="events-intro-copy">
+      We encourage everyone to register for the sevas listed below. Your participation supports the temple’s daily activities and helps keep its services running smoothly.
+    </div>
+    <section class="events-section" id="events" aria-labelledby="eventsTitle">
+      <div class="container">
+        <h2 id="eventsTitle">Puja Events</h2>
+        <table class="events-table">
+          <thead><tr><th scope="col">ಸೇವೆಗಳು | SERVICES</th><th scope="col">ಮೊತ್ತ | AMOUNT</th></tr></thead>
+          <tbody>
+            <tr><td>ಪಂಚಾಮೃತ ಅಭಿಷೇಕ<br><span class="event-name-en">PANCHAMRIT ABHISHEKA</span><br><button class="event-register" type="button" onclick="link()">Register Here</button></td><td>₹351</td></tr>
+            <tr><td>ನಿರಂತರ ಅಭಿಷೇಕ (ಶಾಶ್ವತ ಪೂಜೆ)<br><span class="event-name-en">NIRANTARA ABHISHEKA (SASHWATA PUJE)</span><br><span class="event-note">Note: This seva is performed in your name on special days, such as birthdays or anniversaries, with lifetime payment.</span><br><button class="event-register" type="button" onclick="link()">Register Here</button></td><td>₹1,501</td></tr>
+            <tr><td>ಸಂಕಷ್ಟಹರ ಚತುರ್ಥೀ<br><span class="event-name-en">SANKASHTAHARA CHATURTHI</span><br><button class="event-register" type="button" onclick="link3()">Register Here</button></td><td>₹101</td></tr>
+            <tr><td>ಶ್ರೀ ಸತ್ಯನಾರಾಯಣ ಪೂಜೆ ಸಾಮೂಹಿಕ<br><span class="event-name-en">SHRI SATYANARAYANA PUJA GROUP CEREMONY</span><br><span class="event-note">Note: This seva is performed on the Poornima (full moon day) of every month.</span><br><button class="event-register" type="button" onclick="link2()">Register Here</button></td><td>₹201</td></tr>
+            <tr><td>ವಾಹನ ಪೂಜೆ (ದ್ವಿಚಕ್ರ)<br><span class="event-name-en">VEHICLE PUJA (TWO-WHEELER)</span><br><button class="event-register" type="button" onclick="link()">Register Here</button></td><td>₹101</td></tr>
+            <tr><td>ವಾಹನ ಪೂಜೆ (ನಾಲ್ಕು ಚಕ್ರ)<br><span class="event-name-en">VEHICLE PUJA (FOUR-WHEELER)</span><br><button class="event-register" type="button" onclick="link()">Register Here</button></td><td>₹201</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+  <script src="site-shell.js"></script>
+</body>
 </html>
