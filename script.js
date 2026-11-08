@@ -18,4 +18,4 @@ function checksignin(){if(localStorage.getItem('input')!=='true')location.replac
 function idxto(){location.href='resident-dashboard.html';}
 document.addEventListener('click',event=>{const header=document.querySelector('.main-header');const nav=document.querySelector('.nav-links');const cta=document.querySelector('.cta-button');if(header&&nav&&nav.classList.contains('show')&&!header.contains(event.target)&&(!cta||!cta.contains(event.target)))closeMenu();});
 document.addEventListener('keydown',event=>{if(event.key==='Escape')closeMenu();});
-document.addEventListener('DOMContentLoaded',()=>{const exit=document.querySelector('.exit-button');if(exit)exit.addEventListener('click',()=>{['email','flatNumber','input','residentName'].forEach(key=>localStorage.removeItem(key));location.href='resident-access.html';});});
+document.addEventListener('DOMContentLoaded',()=>{const exit=document.querySelector('.exit-button');if(exit)exit.addEventListener('click',()=>{['email','flatNumber','input','residentName','residentDocId','residentSessionAt'].forEach(key=>localStorage.removeItem(key));location.href='resident-access.html';});});

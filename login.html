@@ -238,6 +238,8 @@ if (!flatNumberPattern.test(flatNumber)) {
                         localStorage.setItem('flatNumber', flatNumber); // Store flat number
                         localStorage.setItem('residentName', residentName); // Store resident name
                         localStorage.setItem('email', email); // Store email
+                        localStorage.setItem('residentDocId', residentDocId);
+                        localStorage.setItem('residentSessionAt', new Date().toISOString());
                         window.location.href = 'resident-dashboard.html'; // Redirect to main page
                     } else {
                         alert('No account found with this name and email for the given flat number.'); // Show error message

@@ -286,6 +286,8 @@ if (!flatNumberPattern.test(flatNumber)) {
                     });
 
                     localStorage.setItem('input', 'true'); // Mark as signed in
+                    localStorage.setItem('residentDocId', residentDocId);
+                    localStorage.setItem('residentSessionAt', new Date().toISOString());
                     window.location.href = 'terms.html'; // Redirect to main page
                 }
 
