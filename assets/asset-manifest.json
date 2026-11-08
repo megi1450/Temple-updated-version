@@ -1,0 +1,905 @@
+{
+  "asset_count": 150,
+  "assets": [
+    {
+      "path": "assets/README.md",
+      "category": "README.md",
+      "bytes": 611,
+      "sha256": "85a78b12fe8b0a32f9dd7d1ee5ba65a303912ad4ba2116c18bbcbd139955a435"
+    },
+    {
+      "path": "assets/asset-manifest.json",
+      "category": "asset-manifest.json",
+      "bytes": 30515,
+      "sha256": "72198870f5ffdcdc52768efb133dac9b6b31a7cf0e7dbffc0b28cddacc731bd2"
+    },
+    {
+      "path": "assets/branding/logos/logo.png",
+      "category": "branding",
+      "bytes": 339405,
+      "sha256": "41bc4facc97dd5206c53ec23d1ead8adb6408367b98d4b218a70491972fc6f69"
+    },
+    {
+      "path": "assets/branding/logos/logo2.jpg",
+      "category": "branding",
+      "bytes": 97897,
+      "sha256": "e69de55484ad4603d0b05938ee63ceff5729059ad1368a66af8797a70abb33e3"
+    },
+    {
+      "path": "assets/branding/logos/logo3.avif",
+      "category": "branding",
+      "bytes": 48384,
+      "sha256": "1b55989c768beaa65a6716113090f0e7d9d8fb78aae5cda3a1155ce681fe357e"
+    },
+    {
+      "path": "assets/branding/logos/logo3.png",
+      "category": "branding",
+      "bytes": 208357,
+      "sha256": "c45928dc498914eca922a9ff50ed5aa46e9915110b7697d540939dc623ecf5b4"
+    },
+    {
+      "path": "assets/branding/logos/logo3up.png",
+      "category": "branding",
+      "bytes": 276305,
+      "sha256": "c1550e4acb255e9ab84e35ff7936033e22f12c433a6c9a767c8734a6e9587fe1"
+    },
+    {
+      "path": "assets/branding/logos/logoB.png",
+      "category": "branding",
+      "bytes": 80158,
+      "sha256": "cd24e31208602bb52848b999488257931e123815de33dd4ad3266a04bfb029db"
+    },
+    {
+      "path": "assets/events/annual-day/bga1.jpg",
+      "category": "events",
+      "bytes": 138137,
+      "sha256": "2c8f742f39df1d924223e350ef258b3ec8aec29d9117430ea8fb15be7a4f94da"
+    },
+    {
+      "path": "assets/events/annual-day/bga10.jpg",
+      "category": "events",
+      "bytes": 373925,
+      "sha256": "1c29e25a5f51a6afacee79ad0efd8b70070c890f120f88e464ce8f8237a0c98f"
+    },
+    {
+      "path": "assets/events/annual-day/bga11.jpg",
+      "category": "events",
+      "bytes": 271895,
+      "sha256": "a96673e775fdd324541f7fb97ab452d7703c33c917b4b96f5338bc71ac85e9d6"
+    },
+    {
+      "path": "assets/events/annual-day/bga12.jpg",
+      "category": "events",
+      "bytes": 274713,
+      "sha256": "4150854c772a1046a53022f02a54deb5bec15361f1a8d5c20da250588cae44bf"
+    },
+    {
+      "path": "assets/events/annual-day/bga13.jpg",
+      "category": "events",
+      "bytes": 280469,
+      "sha256": "11b3701c0bd8dc63e2ae1f2d0c288e5ed7cccadc82e82820a065468c64dff3cc"
+    },
+    {
+      "path": "assets/events/annual-day/bga14.jpg",
+      "category": "events",
+      "bytes": 331987,
+      "sha256": "e9964dd735ead6b5c866dc0481f83258c5aec8e5892b76f1ad24bd1eaa3959f1"
+    },
+    {
+      "path": "assets/events/annual-day/bga15.jpg",
+      "category": "events",
+      "bytes": 330040,
+      "sha256": "35f6f440cbbe047c8db10b97c6300d92beffa68b0f0ff709680f57a77f389b1d"
+    },
+    {
+      "path": "assets/events/annual-day/bga16.jpg",
+      "category": "events",
+      "bytes": 415483,
+      "sha256": "3b09740e195c0c1174185d0951624ba87b3b9210d44fd69ef25b40d92749a43f"
+    },
+    {
+      "path": "assets/events/annual-day/bga17.jpg",
+      "category": "events",
+      "bytes": 319459,
+      "sha256": "57b070d0e063f475123cf267dc9192960aa435c5a19ebd33b1e0eca9911e1661"
+    },
+    {
+      "path": "assets/events/annual-day/bga18.jpg",
+      "category": "events",
+      "bytes": 314868,
+      "sha256": "71ee92f20984445043cdcd5b677ca9c16683f715bbb88aab25e42b9a388c2e4c"
+    },
+    {
+      "path": "assets/events/annual-day/bga19.jpg",
+      "category": "events",
+      "bytes": 334387,
+      "sha256": "1785a2f7c504e079027863beb4d64a36c8be9317c79e332e33195a50d8375688"
+    },
+    {
+      "path": "assets/events/annual-day/bga2.jpg",
+      "category": "events",
+      "bytes": 120616,
+      "sha256": "bd85015a519a2166ff5cc882810fb05b646e0210a4c44f7a9142eb2c400876ab"
+    },
+    {
+      "path": "assets/events/annual-day/bga20.jpg",
+      "category": "events",
+      "bytes": 338539,
+      "sha256": "9d144d07fd75f0b2330dd242b0bb6d5c1d184da1048123d73b2e8e0556128783"
+    },
+    {
+      "path": "assets/events/annual-day/bga3.jpg",
+      "category": "events",
+      "bytes": 542138,
+      "sha256": "2b3df6a5b4af365a14c8365dd1e8dd7495ac0c332aa1c891a752206aba0f223c"
+    },
+    {
+      "path": "assets/events/annual-day/bga4.jpg",
+      "category": "events",
+      "bytes": 245659,
+      "sha256": "401270aa273e3a0730a8c782eb0c2dfbaa122475acc4ffc1fda79a510e50ad8b"
+    },
+    {
+      "path": "assets/events/annual-day/bga5.jpg",
+      "category": "events",
+      "bytes": 222094,
+      "sha256": "5b0c2d157dfb623912d3f21d6db4c50c19806ddfe4e1fe07c95fd8d3c26b69f3"
+    },
+    {
+      "path": "assets/events/annual-day/bga6.jpg",
+      "category": "events",
+      "bytes": 315608,
+      "sha256": "a906230520b80a47fe956d8a8d6156cb362903c242f5f2f70cc4c9f4063b6e7e"
+    },
+    {
+      "path": "assets/events/annual-day/bga7.jpg",
+      "category": "events",
+      "bytes": 306097,
+      "sha256": "00634a7653bdbdb918a81f0773f00387e3da696d505bb0f8e056816293b9a7c5"
+    },
+    {
+      "path": "assets/events/annual-day/bga8.jpg",
+      "category": "events",
+      "bytes": 345498,
+      "sha256": "98ed3b25f1601a964f57bfc341f4b21072b7bdfbcbcbc196451215061c2f5969"
+    },
+    {
+      "path": "assets/events/annual-day/bga9.jpg",
+      "category": "events",
+      "bytes": 342859,
+      "sha256": "ab61c0f6ac8f465857cd912c3f46b1c82ce574319d20b381a0f50d2306c8b213"
+    },
+    {
+      "path": "assets/gallery/bhoomi-puja/bgl1.jpeg",
+      "category": "gallery",
+      "bytes": 758453,
+      "sha256": "c218481c648be419433d7b5db72b93dc55153a915e7b434f43eeaba89145042d"
+    },
+    {
+      "path": "assets/gallery/bhoomi-puja/bgl3.jpeg",
+      "category": "gallery",
+      "bytes": 196747,
+      "sha256": "2637d26882676cd8c6ebe5f6178e9fbae8dac69b1065d8904dbc12fe7d5e0680"
+    },
+    {
+      "path": "assets/gallery/bhoomi-puja/bgl4.jpeg",
+      "category": "gallery",
+      "bytes": 167303,
+      "sha256": "f0c911e85e8050f7e44797a3e6b75aceaa5713441aa97d282c213eecb2f1b749"
+    },
+    {
+      "path": "assets/gallery/bhoomi-puja/blg2.jpeg",
+      "category": "gallery",
+      "bytes": 205947,
+      "sha256": "12ecfb4054065c31429574e25a1beac56da4e9e42e8498bc7a208fe85fa4201d"
+    },
+    {
+      "path": "assets/gallery/misc/dec.gif",
+      "category": "gallery",
+      "bytes": 281552,
+      "sha256": "8eaaa94e4e057f9cb056e0dcffc004c33d3c2cee5f3ffede87d81b5a2e9069e6"
+    },
+    {
+      "path": "assets/gallery/misc/dg1.gif",
+      "category": "gallery",
+      "bytes": 89247,
+      "sha256": "1cc3141671582eca6ec0381288893559642904979ef5a21c7e6ac4bc59259386"
+    },
+    {
+      "path": "assets/gallery/misc/dg2.gif",
+      "category": "gallery",
+      "bytes": 90110,
+      "sha256": "991fbff1329738634e13be5bc2d008eef6dc06e3e92a9e8fe41b78554d6b48d7"
+    },
+    {
+      "path": "assets/gallery/misc/father.png",
+      "category": "gallery",
+      "bytes": 733051,
+      "sha256": "375d960410b2ff10dd624bd18ba7be3d09cc70131b007653255dfdb7b86ec45f"
+    },
+    {
+      "path": "assets/gallery/misc/popup.jpeg",
+      "category": "gallery",
+      "bytes": 208596,
+      "sha256": "5cd0e3640289541fd51566d780aafc8b3b7a1127ab8e9829956c319a4503b548"
+    },
+    {
+      "path": "assets/gallery/misc/warning.png",
+      "category": "gallery",
+      "bytes": 50004,
+      "sha256": "a19b09a7c725a0faca889ad283be142e95538c3cf70a38e4ba36cd55be2806d9"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl-75.jfif",
+      "category": "gallery",
+      "bytes": 227306,
+      "sha256": "867bdfdd99062e85bfe69bae745cac48e7cfca9ceaed09b9d91c27f804a29038"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl1.jpeg",
+      "category": "gallery",
+      "bytes": 355964,
+      "sha256": "6ca88fbb5738f5c4a798ebca9cd4ec90786bbc5320996c107d024069d8f37742"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl10.jpeg",
+      "category": "gallery",
+      "bytes": 227387,
+      "sha256": "bb69c4d690168a5979b5584236d8c6a24a875a86a45cdd25542d9e8476d6991b"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl11.jpeg",
+      "category": "gallery",
+      "bytes": 235664,
+      "sha256": "ad3e27fba5dcfc4feb4ad2ffdba80658ca90831ba34b2d04b9db58cd95202555"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl12.jpeg",
+      "category": "gallery",
+      "bytes": 241434,
+      "sha256": "2fdc591f864d86d626df92e6d920d9d0faa55376a0bd8a4a6b6fcef1b27c7009"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl13.jpeg",
+      "category": "gallery",
+      "bytes": 242406,
+      "sha256": "970b52103207cfc701fecb7dc95baee3e3f83639d214bfcdabe13e7e86a8352e"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl14.jpeg",
+      "category": "gallery",
+      "bytes": 236550,
+      "sha256": "829d030ca82d2e23f263252975a5efe67eeac36cdb0657640401993ff69d1dee"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl15.jpeg",
+      "category": "gallery",
+      "bytes": 256120,
+      "sha256": "acd242e1b62e305d590ba84697bda4848cf2b4af04f7e1370f8e1b021ce51d4f"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl16.jpeg",
+      "category": "gallery",
+      "bytes": 315188,
+      "sha256": "fdc3f1e5b4f1651ddabb5fb1f5c0bed6705d5b974a53570d35d9d273e4e460ba"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl17.jpeg",
+      "category": "gallery",
+      "bytes": 14561,
+      "sha256": "e5b07a7ca96d463be7c2f4b56a151648c07c863769ee9350bcf843b4b2f9f798"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl18.jpeg",
+      "category": "gallery",
+      "bytes": 227403,
+      "sha256": "4155449f99438042c989d7d050a2d2769f27fec6fb683b0f86d1a75f812dc694"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl19.jpeg",
+      "category": "gallery",
+      "bytes": 256176,
+      "sha256": "3eaf07d6ab8cc3b38ee1198b6c67dffb778b949778c046d53c65ab29bb179e24"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl2.jpeg",
+      "category": "gallery",
+      "bytes": 213131,
+      "sha256": "67054c3b10d2e59397814d566a951e8916816306b1ae5aa387908568767b3886"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl20.jpeg",
+      "category": "gallery",
+      "bytes": 253225,
+      "sha256": "e8932308ade8f79b53a1b974b2071e94a405784ce07be40b44bd50277c9fdae6"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl21.jpeg",
+      "category": "gallery",
+      "bytes": 263766,
+      "sha256": "850209bedd0bfce1ab60491d6e1b8acca36eefe8ccc133178b57ebf383c71ef4"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl22.jpeg",
+      "category": "gallery",
+      "bytes": 248798,
+      "sha256": "b8352bfe89b42d4fd8138336f7b97e56a5187efc432cc904ac13a741a4b9ead0"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl23.jpeg",
+      "category": "gallery",
+      "bytes": 256272,
+      "sha256": "c085cbc249bd22fb8e0ef5f3f6a9537112cf3545644d0bb4114222b93caa7d3f"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl24.jpeg",
+      "category": "gallery",
+      "bytes": 1110188,
+      "sha256": "7fcf45867eba464537b2c46681973ec1c535a8c18931225b74f4827855a32c60"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl25.jpeg",
+      "category": "gallery",
+      "bytes": 231439,
+      "sha256": "3dc4e749e96a3dc02705da331ad7a639c576527949fc4fea9b9be665da92d23a"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl26.jpeg",
+      "category": "gallery",
+      "bytes": 228158,
+      "sha256": "9c01f927096605c1d56e02ead5cb2b9720d0d78e4335d042b1198a0a60e66575"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl27.jpeg",
+      "category": "gallery",
+      "bytes": 253022,
+      "sha256": "86761f64ad8734320a940cad3f97a51d58121df1a7160da8b83021c625eec5c7"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl28.jpeg",
+      "category": "gallery",
+      "bytes": 274468,
+      "sha256": "50aeb91d3402e52537700b39677fe24285ff03045d55e3d12a47e63d57c42565"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl29.jpeg",
+      "category": "gallery",
+      "bytes": 293719,
+      "sha256": "3c644359b5022d428dd930c5713e028813ce0108e341e08c0eae0cf662289632"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl3.jpeg",
+      "category": "gallery",
+      "bytes": 175785,
+      "sha256": "71d8ff56517c639f66fd4054d733d76b94058d08590fbf6f735872c0a978baca"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl30.jpeg",
+      "category": "gallery",
+      "bytes": 254144,
+      "sha256": "dbff096c944c51a3eecb29a96dcb952e5a52bf4d6b2c3454d1fe6452dcb0f482"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl31.jpeg",
+      "category": "gallery",
+      "bytes": 341453,
+      "sha256": "cae9b2821294e9b5b9454ab58b8bbfd2b346a378406dcacec6e8b1d2eebde2f1"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl32.jpeg",
+      "category": "gallery",
+      "bytes": 219329,
+      "sha256": "9c6c4f3b7f13cdcaec7af2466dfb6ab71f354d2fff13a93a3c2c8fde1ebf0fdf"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl33.jpeg",
+      "category": "gallery",
+      "bytes": 261316,
+      "sha256": "ca5f17a2a18f3851ac2cf7ec9ae367eedf9d2f00fdc37f5a3eb5ea07c866834c"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl34.jpeg",
+      "category": "gallery",
+      "bytes": 174263,
+      "sha256": "366b82a59919023e8c7f54ec2f1dd282ac6dfc1474a09d6e817dbc9109c991b1"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl35.jpeg",
+      "category": "gallery",
+      "bytes": 200986,
+      "sha256": "2e17e1573fc1d06256ef0952d71ec9a8cd399f3d0106c93f2e7f0d856e43023f"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl36.jpeg",
+      "category": "gallery",
+      "bytes": 194220,
+      "sha256": "b9189da440cb8ffd9543ce1fa73b740250b8715f24dc279cc067053363348037"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl37.jpeg",
+      "category": "gallery",
+      "bytes": 238282,
+      "sha256": "c572469daedf37c9ac8263261514fd8131b7e7940223becd77af9e36d67c450c"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl38.jpeg",
+      "category": "gallery",
+      "bytes": 273356,
+      "sha256": "47f496097ecdf04cb7f86811f1aeba99b93a0b5e7cd3c83dbe2b40437cb32beb"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl39.jpg",
+      "category": "gallery",
+      "bytes": 229347,
+      "sha256": "889c85eb4664262008ee3c4b4c5c2ab08f86e3e7ea2c64f50b295d4797f44a89"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl4.jpeg",
+      "category": "gallery",
+      "bytes": 178889,
+      "sha256": "fe83e9a27a5aa706d2275b1a73f1336ea3570a1b4d654a1c2b677bded4782e35"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl40.jpg",
+      "category": "gallery",
+      "bytes": 299169,
+      "sha256": "e7ccc1d1ebe76713f8edd58e7e326eac2648bcb4d2e13a1f2a107b39f8d743ba"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl41.jpg",
+      "category": "gallery",
+      "bytes": 167224,
+      "sha256": "f8f85cf4e4808656602e666429441689f77893d67f82f376104a850e84730ab3"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl42.jpg",
+      "category": "gallery",
+      "bytes": 362597,
+      "sha256": "21426deb90d89b9ff4f9607f7559595f5732c36577d4648b626c013cf0b1889f"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl43.jpg",
+      "category": "gallery",
+      "bytes": 280940,
+      "sha256": "79dde434ed9482cbab4a7694404cf8bf7556f8e82d32ccd9940023266b22c586"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl44.jpg",
+      "category": "gallery",
+      "bytes": 431008,
+      "sha256": "48ed5b832abaccfe9e788ffe4bde4721c2506a4d4d7a9c744636b5db5b2067be"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl45.jpg",
+      "category": "gallery",
+      "bytes": 326647,
+      "sha256": "1491df88d3be5d929fbefea9d4f61edc73a9369703816335c6c37a6081365deb"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl46.jpg",
+      "category": "gallery",
+      "bytes": 275679,
+      "sha256": "e86854282ef388a0f6a0d44e7753a877baac3708cb7d8a8e54084b9ff7e1b2b9"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl47.jpg",
+      "category": "gallery",
+      "bytes": 361736,
+      "sha256": "151e52e8c785843442dc97e0a671336314067343561ecc9789f4daa5ef8ef1e9"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl48.jpg",
+      "category": "gallery",
+      "bytes": 254581,
+      "sha256": "1475160e86580f41aca3a3f008bb94d896999640dfa3a2da4da274855210b3dc"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl49.jpg",
+      "category": "gallery",
+      "bytes": 277827,
+      "sha256": "9704aced073419be5199ac023f06ab02f7a0741694d8fd93c1c36bb884310f4d"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl5.jpeg",
+      "category": "gallery",
+      "bytes": 229827,
+      "sha256": "8aaaec80f81e78dbd749c3b12a21e097729b4db66abff22f4f01c7fd59f2f010"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl50.jpg",
+      "category": "gallery",
+      "bytes": 277399,
+      "sha256": "73cd2f385ab299cf75aeca349ed08217e6e08cf97e5bfe54da9d7893c33fe034"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl51.jpg",
+      "category": "gallery",
+      "bytes": 295306,
+      "sha256": "fc3ad05bc694f2703947012529c0403c1439235d7579e9648691e6123760bf22"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl52.jpg",
+      "category": "gallery",
+      "bytes": 254750,
+      "sha256": "9c83994e2e6fd37fc8365311f749f08e98c615c0608b1926baefc26903ba8081"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl53.jpg",
+      "category": "gallery",
+      "bytes": 231717,
+      "sha256": "5448bf879c9c1cffb52b0640143673f1fd0a52ad8cc57c0715bf4e7ef9e32663"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl54.jpg",
+      "category": "gallery",
+      "bytes": 275646,
+      "sha256": "f5657c8bb65d938f26d769549d5923e0555d7904b309bf66f3113ff18df0e8c3"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl55.jpg",
+      "category": "gallery",
+      "bytes": 316261,
+      "sha256": "5f329864a998e84ed3b782de2b6e3f4275b1c777e6c90e9a39798d2cf88c6e24"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl56.jpg",
+      "category": "gallery",
+      "bytes": 309892,
+      "sha256": "08caabfe227341d3403ac1f77e6c516f75a8811709c11adc11f0a059b49efe90"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl57.jpg",
+      "category": "gallery",
+      "bytes": 305430,
+      "sha256": "b4238e54a60d526abff251d95d146e7b1d0dda177ae67ab1d32248a65f3ee995"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl58.jpg",
+      "category": "gallery",
+      "bytes": 262577,
+      "sha256": "de66ed6329849168650480d4ce6d19b14f38b0445028dcc881e98a950afdadab"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl59.jpg",
+      "category": "gallery",
+      "bytes": 273168,
+      "sha256": "9c7e0e4b87e34074ddf818617a3b1fb43694020c8651f9fb19ce248b62225b55"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl6.jpeg",
+      "category": "gallery",
+      "bytes": 238029,
+      "sha256": "4d2b3d055edf3503211ac0a2c81d8ec15b7a2cf971106d93af2537c505975301"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl60.jpg",
+      "category": "gallery",
+      "bytes": 257632,
+      "sha256": "70aa2884c3a6dea4844a90f7941eb265c4f66d1588bef5b39beb5c3b9fc2a6fb"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl61.jpg",
+      "category": "gallery",
+      "bytes": 201142,
+      "sha256": "39c8a148b39256938602c784f164bcfa53606286294014d3f8f590ee7fa58a76"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl62.jpeg",
+      "category": "gallery",
+      "bytes": 273773,
+      "sha256": "c51e41c5d4e3a0a1aca994ef3c35630bb51460e54c2bf0f857b7aac51f76491e"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl63.jpeg",
+      "category": "gallery",
+      "bytes": 283669,
+      "sha256": "72081339e22d7974d04d3888ddfb328f75bab6144008163a06e4ae6996ffb8cf"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl64.jpg",
+      "category": "gallery",
+      "bytes": 289623,
+      "sha256": "148ff717e349823df41064a9eedc8e37afcc84ff061717cffd84dc734682c8c7"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl65.jpg",
+      "category": "gallery",
+      "bytes": 271624,
+      "sha256": "c71109ca6dc7ac25bd98f5904f53b1347a3bbd6092617f4e551909995c393517"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl66.jpg",
+      "category": "gallery",
+      "bytes": 311723,
+      "sha256": "85f4fd3e3ae2ed8a0d1fdfc11ac9477657cb72b4c655210d3b25992f71200e55"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl67.jpg",
+      "category": "gallery",
+      "bytes": 266079,
+      "sha256": "5bd172ed8475113c945205484fc26592e3fc6dc9ccffad7ee7cb60691b4cb761"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl68.jfif",
+      "category": "gallery",
+      "bytes": 264475,
+      "sha256": "ce6575953e6031611ace1e7c9b4018141a1aeed431d91692ee95f04b84e9af76"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl69.jfif",
+      "category": "gallery",
+      "bytes": 344619,
+      "sha256": "11e30bc340dc7fc3f3f69fc26e5673744eb8fce1bc092577b6170a99754f036c"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl7.jpeg",
+      "category": "gallery",
+      "bytes": 231100,
+      "sha256": "15af4b086d39d80b6ffe3186165fa71ba68835098cdbb8029cab796b7f2a9535"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl71.jfif",
+      "category": "gallery",
+      "bytes": 288913,
+      "sha256": "5eebcd52f15ea1fa497f42ab608912301b958347e63d9d725569d7deea549fc3"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl72.jfif",
+      "category": "gallery",
+      "bytes": 313691,
+      "sha256": "d0df73bec1930f7e853c3b90f16bba0dcb661628894c35a407a1f7b963363e19"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl73.jfif",
+      "category": "gallery",
+      "bytes": 276540,
+      "sha256": "c11a319b8b9d9a3772ff3310e14f0236545d8e855c041e27986f3d8197f7c842"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl74.jfif",
+      "category": "gallery",
+      "bytes": 311717,
+      "sha256": "798946ba44740f322dba4c5e60f095b37765375b69c40c8140e15aa09d222950"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl75.jfif",
+      "category": "gallery",
+      "bytes": 219014,
+      "sha256": "1c76cd0142afc0ec6013f129c7dd39f95cf70bf02ccf98d155658f14dd3ee2b0"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl76.jfif",
+      "category": "gallery",
+      "bytes": 218429,
+      "sha256": "771e94b74e0a8a3376418c56a3a13b19c9f445b37920103d07a4ca4a23e5e702"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl77.jfif",
+      "category": "gallery",
+      "bytes": 209156,
+      "sha256": "92ccfd26acfbe51f843039f910257406ad7107a4100f235c477c5e314a514597"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl78.jfif",
+      "category": "gallery",
+      "bytes": 208148,
+      "sha256": "50eaa258327eba3b97752d749b6841cdd98a2b1c5c19a6da8034538016528d2b"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl79.jpg",
+      "category": "gallery",
+      "bytes": 226412,
+      "sha256": "d2ee4e965da3c46bc9250cabc3c11922bb3718dabbdc0fbe549a86b250e214bd"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl8.jpeg",
+      "category": "gallery",
+      "bytes": 174881,
+      "sha256": "ae5038c095febd4e161e8d516165d4da2c055f02c86442da9202463135b2250e"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl80.jpg",
+      "category": "gallery",
+      "bytes": 247746,
+      "sha256": "1e6c555fb90ec9725dfe43aff3165b45a02ff846888517e058d6a4a3b5a2936c"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl81.jpg",
+      "category": "gallery",
+      "bytes": 179297,
+      "sha256": "de65f811e12d6099d19d66fa44d44dbfcb9077926376ad090d03fcc54cd29860"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl82.jpeg",
+      "category": "gallery",
+      "bytes": 179299,
+      "sha256": "ff0447ac2d511833d92bce46380c3b6d809b7fe52b12a970cc87fb31c7fccb43"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl82.jpg",
+      "category": "gallery",
+      "bytes": 177054,
+      "sha256": "2593a15037297fc352546dede635c976c74f061063e6976814dcd7f8e2f5d56b"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl83.jpg",
+      "category": "gallery",
+      "bytes": 177054,
+      "sha256": "2593a15037297fc352546dede635c976c74f061063e6976814dcd7f8e2f5d56b"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl84.jpg",
+      "category": "gallery",
+      "bytes": 223608,
+      "sha256": "08ae2e0fa16de2a898a5e292e2b4ec9f0f2088cc21966a227e28d11417e1fb1b"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl85.jpg",
+      "category": "gallery",
+      "bytes": 225845,
+      "sha256": "454bd1d12e39bbd4a3d02c907c4a19e6afcbed59866e09dea8ad4328b6810d59"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl86.jpg",
+      "category": "gallery",
+      "bytes": 207559,
+      "sha256": "5577ccf5f453e351d2e83b420f905e5c7d239b36b252c105d98756375fc8db83"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl87.jpg",
+      "category": "gallery",
+      "bytes": 148226,
+      "sha256": "25711a0962af13e70ee26ba2dc1983793ac98528d765b4fe45cc81e258c4ea08"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl88.jpg",
+      "category": "gallery",
+      "bytes": 244127,
+      "sha256": "fa8604e8170a838bee131982df1ffaf930981e6d45d3d005f484b8da56282845"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl89.jpg",
+      "category": "gallery",
+      "bytes": 304916,
+      "sha256": "2111bbe349027d0708f55679e324ac397d4137947d6022d23f44688a33568b39"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl9.jpeg",
+      "category": "gallery",
+      "bytes": 219934,
+      "sha256": "f87d58f18918907981fc59339b6f4ab163977c79179c8fa0eac9a5623d718cf9"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl90.jpg",
+      "category": "gallery",
+      "bytes": 298877,
+      "sha256": "1363cd70c56f9660748b4b614708c74c87d9f771a42354abaa91e9de9f7e3163"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl91.jpg",
+      "category": "gallery",
+      "bytes": 304037,
+      "sha256": "8b789e3921f375455f0f52be3a33b6fc8e3612e084750fc003d50f24944a2f89"
+    },
+    {
+      "path": "assets/gallery/nirantara-abhisheka/gl92.jpg",
+      "category": "gallery",
+      "bytes": 260167,
+      "sha256": "878b140cf866fb895dac5049cef543959579cd5261cc68293f5dea16356890e9"
+    },
+    {
+      "path": "assets/gallery/prana-prathishtapana/pgl1.jpeg",
+      "category": "gallery",
+      "bytes": 246201,
+      "sha256": "4bad5f0c3fa6bdb8cfcf2e3b9a2021c59406ba5b211e353633eb9a516b3eb463"
+    },
+    {
+      "path": "assets/gallery/prana-prathishtapana/pgl2.jpeg",
+      "category": "gallery",
+      "bytes": 299270,
+      "sha256": "cc499b73ccb5dd7e3fa24738a23ebe1d3869ba737ef9a0ff945a3f8ac39ee59f"
+    },
+    {
+      "path": "assets/gallery/prana-prathishtapana/pgl3.jpeg",
+      "category": "gallery",
+      "bytes": 339190,
+      "sha256": "7ad3649b0b20fcdfb21b323cc61c66e8e3265bd34c199b3cd2bd3b43edfbab98"
+    },
+    {
+      "path": "assets/gallery/prana-prathishtapana/pgl4.jpeg",
+      "category": "gallery",
+      "bytes": 505851,
+      "sha256": "251f2b24ecc031e53634a457c14b4b966e7d9dd1e73d86b6c1db400cf05361c0"
+    },
+    {
+      "path": "assets/gallery/slides/sl1.jpeg",
+      "category": "gallery",
+      "bytes": 168701,
+      "sha256": "90c1694e86c5f17723c0d8ad86a3b9dc144511e51c1751894409dd3bc6c3e7ce"
+    },
+    {
+      "path": "assets/gallery/slides/sl2.jpeg",
+      "category": "gallery",
+      "bytes": 150561,
+      "sha256": "96a7c8fb5449e0e2b75519381b2f5e30e5dfb4ffef13835fa3c8874497c6edf6"
+    },
+    {
+      "path": "assets/gallery/slides/sl3.jpeg",
+      "category": "gallery",
+      "bytes": 147914,
+      "sha256": "cfd1c5438d75be7b791a98c544025603af3287a5667af1d315902b84ef828a81"
+    },
+    {
+      "path": "assets/gallery/slides/sl4.jpeg",
+      "category": "gallery",
+      "bytes": 129286,
+      "sha256": "60a67c1e70f95d94c72afa4afa010c77c5c228a528666c0018e2b6d6be3867bb"
+    },
+    {
+      "path": "assets/gallery/slides/sl5.jpeg",
+      "category": "gallery",
+      "bytes": 184965,
+      "sha256": "d4166bd9fae0f7f32737cf7080858660d6d547479e9e31a0ce639501a369f424"
+    },
+    {
+      "path": "assets/hero/back.jpeg",
+      "category": "hero",
+      "bytes": 225592,
+      "sha256": "d78efd0fa68bf5dcd1b667d55b1b06460f7f37bc929eef9a10516f877a454390"
+    },
+    {
+      "path": "assets/hero/back3.jpg",
+      "category": "hero",
+      "bytes": 136092,
+      "sha256": "24116f3e81002514c817897e1cd8813def1d9458ab328fa064cf122ee184dff1"
+    },
+    {
+      "path": "assets/hero/back3.png",
+      "category": "hero",
+      "bytes": 1411351,
+      "sha256": "316b2653c5a343922cd6a4cbf7dafe644bd89902044bd2990a4eee7013dbab29"
+    },
+    {
+      "path": "assets/hero/back4.jpg",
+      "category": "hero",
+      "bytes": 1346512,
+      "sha256": "20a37a0dcc2bcc6c0fc2dafb30e2db923874d8779e37b7adbf45b60ba5622978"
+    },
+    {
+      "path": "assets/hero/bg.png",
+      "category": "hero",
+      "bytes": 937599,
+      "sha256": "d4f2a1499ac9c9b44a972e6d3cbd699541e8d0774479977f82f2bcea7ebe54f7"
+    },
+    {
+      "path": "assets/hero/bg2.png",
+      "category": "hero",
+      "bytes": 1410813,
+      "sha256": "3c64f16f1ced3d6b9ded57e944d1f8a87c088efd970d9ff343f10856835a81f3"
+    },
+    {
+      "path": "assets/hero/diya-lamps.jpg",
+      "category": "hero",
+      "bytes": 358779,
+      "sha256": "bd6e6609e90ec7034c18641bc281c3b71fe9d169fc7411a29f97c04e0339b44e"
+    },
+    {
+      "path": "assets/hero/diya-lamps.webp",
+      "category": "hero",
+      "bytes": 80470,
+      "sha256": "c72e3f00aa8d0f95399f7c89e0572863580c40fcf450ce1913c045b5d55a81a2"
+    },
+    {
+      "path": "assets/hero/temple-hero-wide.webp",
+      "category": "hero",
+      "bytes": 92372,
+      "sha256": "7cffc7a19af605358eac56f10ee68d2d9dfc3053261ff1051437d560578e29dd"
+    },
+    {
+      "path": "assets/ui/loader/ld.gif",
+      "category": "ui",
+      "bytes": 1351819,
+      "sha256": "574dc6727b3fc4a0d64e372afb5d0e52d4dca7f9804c215737c272d6d7c74d4b"
+    }
+  ]
+}
