@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script type="module">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module">
         // Import Firebase and Firestore modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
@@ -198,51 +199,47 @@
         // Initial chart load
         initChart();
     </script>
-    <style>
+<style>
         /* Make the chart responsive */
         #contributionsChart {
             width: 100%;
             height: 400px; /* Maintain a large chart size */
         }
     </style>
-</head>
-<body onload="admin()">
-    <h2>Flat and Block Contributions for Temple Activities</h2>
-    
-    <!-- Dropdown Menus for Event and View Selection -->
-    <div class="dropdown-container">
-        <div>
-            <label for="event">Select Event:</label>
-            <select id="event" onchange="updateChart()">
-                <option value="" selected>None of the above</option>
-                <option value="PANCHAMRIT ABHISHEKA">PANCHAMRIT ABHISHEKA</option>
-                <option value="NIRANTARA ABHISHEKA">NIRANTARA ABHISHEKA</option>
-                <option value="SANKASHTAHARA CHATURTHI">SANKASHTAHARA CHATURTHI</option>
-                <option value="SHRI SATYANARAYANA PUJA GROUP CEREMONY">SHRI SATYANARAYANA PUJA GROUP CEREMONY</option>
-                <option value="VEHICLE PUJA (TWO-WHEELER)">VEHICLE PUJA (TWO-WHEELER)</option>
-                <option value="VEHICLE PUJA (FOUR-WHEELER)">VEHICLE PUJA (FOUR-WHEELER)</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="filterType">Select View:</label>
-            <select id="filterType" onchange="updateChart()">
-                <option value="flat">Per Flat</option>
-                <option value="block">Per Block</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Chart Container -->
-    <div class="chart-container">
-        <canvas id="contributionsChart" width="800" height="400"></canvas>
-    </div>
-
-    <!-- Legend (Optional) -->
-    <div class="legend">
-        <div><span style="background-color: rgba(75, 192, 192, 0.6)"></span>Total Registrations</div>
-        <div><span style="background-color: rgba(153, 102, 255, 0.6)"></span>Registrations Per Block</div>
-    </div>
-</body>
+<title>Contribution Reports</title><link href="redesign.css" rel="stylesheet"/></head>
+<body data-area="admin" data-page="Chart.html" onload="admin()">
+<h2>Flat and Block Contributions for Temple Activities</h2>
+<!-- Dropdown Menus for Event and View Selection -->
+<div class="dropdown-container">
+<div>
+<label for="event">Select Event:</label>
+<select id="event" onchange="updateChart()">
+<option selected="" value="">None of the above</option>
+<option value="PANCHAMRIT ABHISHEKA">PANCHAMRIT ABHISHEKA</option>
+<option value="NIRANTARA ABHISHEKA">NIRANTARA ABHISHEKA</option>
+<option value="SANKASHTAHARA CHATURTHI">SANKASHTAHARA CHATURTHI</option>
+<option value="SHRI SATYANARAYANA PUJA GROUP CEREMONY">SHRI SATYANARAYANA PUJA GROUP CEREMONY</option>
+<option value="VEHICLE PUJA (TWO-WHEELER)">VEHICLE PUJA (TWO-WHEELER)</option>
+<option value="VEHICLE PUJA (FOUR-WHEELER)">VEHICLE PUJA (FOUR-WHEELER)</option>
+</select>
+</div>
+<div>
+<label for="filterType">Select View:</label>
+<select id="filterType" onchange="updateChart()">
+<option value="flat">Per Flat</option>
+<option value="block">Per Block</option>
+</select>
+</div>
+</div>
+<!-- Chart Container -->
+<div class="chart-container">
+<canvas height="400" id="contributionsChart" width="800"></canvas>
+</div>
+<!-- Legend (Optional) -->
+<div class="legend">
+<div><span style="background-color: rgba(75, 192, 192, 0.6)"></span>Total Registrations</div>
+<div><span style="background-color: rgba(153, 102, 255, 0.6)"></span>Registrations Per Block</div>
+</div>
+<script src="site-shell.js"></script></body>
 <script src="admin.js"></script>
 </html>

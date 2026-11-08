@@ -6,12 +6,12 @@ This repository is an isolated copy of the original `Temple-Website` project. Th
 
 ## Local preview
 
-Serve this folder with any static HTTP server (Firebase Hosting is configured in `firebase.json`). Open `main.html` for the public temple website.
+Serve this folder with any static HTTP server. Open `index.html` for the public temple website, or `main.html` as a compatible homepage route.
 
-## Important
+## Important security note
 
-The current legacy resident and administrator access flows use client-side storage/session checks. These are not a substitute for secure authentication and server-side authorisation. Do not treat this static-site access control as production-grade security. The Firebase project configuration is retained for compatibility; do not deploy this copy to the live Firebase project without a separate review and explicit approval.
+The legacy resident and administrator access flows use client-side storage/session checks. These are not a substitute for secure authentication and server-side authorisation. Do not treat this static-site access control as production-grade security. The Firebase project configuration is retained for compatibility; do not deploy this copy to the live Firebase project without a separate review and explicit approval.
 
 ## Assets
 
-Original temple photographs are retained. External visual assets and their sources/licences are documented in `ASSET_CREDITS.md`.
+Original temple photographs are retained and organised under `assets/`. External visual assets and their sources/licences are documented in `ASSET_CREDITS.md`.

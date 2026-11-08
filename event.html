@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-    <link rel="icon" href="assets/logos/logo3.png">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Registration Management | Shri Varasiddhi Vinayaka Temple</title>
+<link href="assets/branding/logos/logo3.png" rel="icon"/>
+<style>
         /* Base styling */
         body {
             font-family: 'Arial', sans-serif;
@@ -24,7 +25,7 @@
             font-size: 24px;
         }
 
-        #homeButton {
+        .admin-nav-button {
             background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
@@ -40,7 +41,7 @@
             width: fit-content; /* Button width fits the text */
         }
 
-        #homeButton:hover {
+        .admin-nav-button:hover {
             background-color: #45a049;
         }
 
@@ -134,65 +135,57 @@
             }
         }
     </style>
-</head>
-<body onload="admin()">
-
-    <h1>AO TEMPLE ADMIN</h1>
-    <div style="display: flex;">
-        <button id="homeButton" onclick="window.location.href='adminhome.html'">Home</button>
-        &nbsp;&nbsp;
-        <button id="homeButton" onclick="window.location.href='flatsort.html'">Flat Info</button>
-    </div>
-    <div id="searchPanel">
-        <select id="event">
-            <option value="" selected>None of the above</option>
-            <option value="PANCHAMRIT ABHISHEKA">PANCHAMRIT ABHISHEKA</option>
-            <option value="NIRANTARA ABHISHEKA">NIRANTARA ABHISHEKA</option>
-            <option value="SANKASHTAHARA CHATURTHI">SANKASHTAHARA CHATURTHI</option>
-            <option value="SHRI SATYANARAYANA PUJA GROUP CEREMONY">SHRI SATYANARAYANA PUJA GROUP CEREMONY</option>
-            <option value="VEHICLE PUJA (TWO-WHEELER)">VEHICLE PUJA (TWO-WHEELER)</option>
-            <option value="VEHICLE PUJA (FOUR-WHEELER)">VEHICLE PUJA (FOUR-WHEELER)</option>
-        </select>
-
-        <select id="occasion">
-            <option value="" selected>None of the above</option>
-            <option value="Birthday">Birthday</option>
-            <option value="Anniversary">Anniversary</option>
-            <option value="Others">Others</option>
-        </select>
-
-        <!-- Hidden text input for specifying "Other" occasion -->
-        <input type="text" id="otherOccasionInput" placeholder="Specify other occasion" style="display:none;">
-        <input type="text" id="receiptNumber" placeholder="Receipt Number">
-
-        <!-- Month filter -->
-        <select id="monthFilter">
-            <option value="" selected>All Months</option>
-            <option value="01">January</option>
-            <option value="02">February</option>
-            <option value="03">March</option>
-            <option value="04">April</option>
-            <option value="05">May</option>
-            <option value="06">June</option>
-            <option value="07">July</option>
-            <option value="08">August</option>
-            <option value="09">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-        </select>
-
-        <button id="searchBtn">Search</button>
-        <button id="exportBtn">Export to Excel</button>
-        <img src="assets/loader/ld.gif" style="height: 50px; width: 50px; border-radius: 75px; margin-bottom: 10px; visibility: hidden;" id="loading">
-    </div>
-
-    <div id="results"></div>
-
-    <!-- Importing xlsx library for Excel export -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-
-    <script type="module">
+<link href="redesign.css" rel="stylesheet"/></head>
+<body data-area="admin" data-page="event.html" onload="admin()">
+<h1>AO TEMPLE ADMIN</h1>
+<div style="display: flex;">
+<button class="admin-nav-button" onclick="window.location.href='adminhome.html'">Home</button>
+          
+        <button class="admin-nav-button" onclick="window.location.href='flatsort.html'">Flat Info</button>
+</div>
+<div id="searchPanel">
+<select id="event">
+<option selected="" value="">None of the above</option>
+<option value="PANCHAMRIT ABHISHEKA">PANCHAMRIT ABHISHEKA</option>
+<option value="NIRANTARA ABHISHEKA">NIRANTARA ABHISHEKA</option>
+<option value="SANKASHTAHARA CHATURTHI">SANKASHTAHARA CHATURTHI</option>
+<option value="SHRI SATYANARAYANA PUJA GROUP CEREMONY">SHRI SATYANARAYANA PUJA GROUP CEREMONY</option>
+<option value="VEHICLE PUJA (TWO-WHEELER)">VEHICLE PUJA (TWO-WHEELER)</option>
+<option value="VEHICLE PUJA (FOUR-WHEELER)">VEHICLE PUJA (FOUR-WHEELER)</option>
+</select>
+<select id="occasion">
+<option selected="" value="">None of the above</option>
+<option value="Birthday">Birthday</option>
+<option value="Anniversary">Anniversary</option>
+<option value="Others">Others</option>
+</select>
+<!-- Hidden text input for specifying "Other" occasion -->
+<input id="otherOccasionInput" placeholder="Specify other occasion" style="display:none;" type="text"/>
+<input id="receiptNumber" placeholder="Receipt Number" type="text"/>
+<!-- Month filter -->
+<select id="monthFilter">
+<option selected="" value="">All Months</option>
+<option value="01">January</option>
+<option value="02">February</option>
+<option value="03">March</option>
+<option value="04">April</option>
+<option value="05">May</option>
+<option value="06">June</option>
+<option value="07">July</option>
+<option value="08">August</option>
+<option value="09">September</option>
+<option value="10">October</option>
+<option value="11">November</option>
+<option value="12">December</option>
+</select>
+<button id="searchBtn">Search</button>
+<button id="exportBtn">Export to Excel</button>
+<img decoding="async" id="loading" loading="lazy" src="assets/ui/loader/ld.gif" style="height: 50px; width: 50px; border-radius: 75px; margin-bottom: 10px; visibility: hidden;"/>
+</div>
+<div id="results"></div>
+<!-- Importing xlsx library for Excel export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+<script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
         import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
 
@@ -342,6 +335,6 @@ document.getElementById('exportBtn').addEventListener('click', () => {
 });
 
     </script>
-    <script src="admin.js"></script>
-</body>
+<script src="admin.js"></script>
+<script src="site-shell.js"></script></body>
 </html>

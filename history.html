@@ -1,13 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="assets/logos/logo.png">
-
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Registration History | Shri Varasiddhi Vinayaka Temple</title>
+<link href="styles.css" rel="stylesheet"/>
+<link href="assets/branding/logos/logo.png" rel="icon"/>
+<style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -165,45 +165,41 @@
 }
 
     </style>
-</head>
-<body onload="checksignin()">
-
-    <div class="hamburger2">
-        <img src="assets/logos/logo3.avif" class="hlogo">&nbsp;&nbsp;<p>Shri Varasiddhi Vinayaka Temple</p>
-    </div>
-    <div style="width: 100%; align-items: center; justify-items: center;">
-        <div style="width: 100%; align-items: center; justify-items: center;">
-            <div class="hamburger" onclick="home()">🏠︎ Go to Home</div>
-            </div>
-    </div>
-
-    <main class="container">
-        <h2>Registration History</h2>
-        <table id="registrationTable">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Date</th>
-                    <th>Mobile Number</th>
-                    <th>Event</th>
-                    <th>Occasion</th>
-                    <th>Receipt No.</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Dynamic rows will be inserted here -->
-            </tbody>
-        </table>
-    </main>
-
-    <footer class="main-footer2">
-        <div class="container" style="width: 100%; align-items: center; justify-content: center;">
-            <p>&copy; 2024 Shri Varasiddhi Vinayaka Arvind Oasis Temple Committee | All Rights Reserved</p>
-            <hr>
-        </div>
-    </footer>
-
-    <script type="module">
+<link href="redesign.css" rel="stylesheet"/></head>
+<body data-area="resident" data-page="history.html" onload="checksignin()">
+<div class="hamburger2">
+<img class="hlogo" src="assets/branding/logos/logo3.avif"/>  <p>Shri Varasiddhi Vinayaka Temple</p>
+</div>
+<div style="width: 100%; align-items: center; justify-items: center;">
+<div style="width: 100%; align-items: center; justify-items: center;">
+<div class="hamburger" onclick="home()">🏠︎ Go to Home</div>
+</div>
+</div>
+<main class="container">
+<h2>Registration History</h2>
+<table id="registrationTable">
+<thead>
+<tr>
+<th>Name</th>
+<th>Date</th>
+<th>Mobile Number</th>
+<th>Event</th>
+<th>Occasion</th>
+<th>Receipt No.</th>
+</tr>
+</thead>
+<tbody>
+<!-- Dynamic rows will be inserted here -->
+</tbody>
+</table>
+</main>
+<footer class="main-footer2">
+<div class="container" style="width: 100%; align-items: center; justify-content: center;">
+<p>© 2024 Shri Varasiddhi Vinayaka Arvind Oasis Temple Committee | All Rights Reserved</p>
+<hr/>
+</div>
+</footer>
+<script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
         import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
 
@@ -305,7 +301,6 @@ window.addEventListener('resize', fetchRegistrationHistory);
             });
         });
     </script>
-
-</body>
+<script src="site-shell.js"></script></body>
 <script src="script.js"></script>
 </html>

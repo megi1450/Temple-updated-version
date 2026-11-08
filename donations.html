@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Donations - Shri Varasiddhi Vinayaka Temple</title>
-  <link rel="icon" href="assets/logos/logo.png">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
-  <script src="donations-config.js" defer></script>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Resident Donations | Shri Varasiddhi Vinayaka Temple</title>
+<link href="assets/branding/logos/logo.png" rel="icon"/>
+<link href="styles.css" rel="stylesheet"/>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script defer="" src="donations-config.js"></script>
+<style>
     .donation-page { flex:1; width:100%; padding:28px 16px 42px; background:#fff8dc; }
     .donation-wrap { max-width:1000px; margin:0 auto; }
     .donation-top { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:22px; min-width:0; }
@@ -70,122 +71,119 @@
       #receiptSection .donation-actions { display:none !important; }
     }
   </style>
-</head>
-<body>
-  <div id="pageLoader" class="donation-loader"><div class="donation-spinner"></div><div id="loaderText">Loading donation page...</div></div>
-  <header class="hamburger2">
-    <img src="assets/logos/logo3.avif" class="hlogo" alt="Temple logo">
-    <p>Shri Varasiddhi Vinayaka Temple</p>
-  </header>
-  <main class="donation-page">
-    <div class="donation-wrap">
-      <div class="donation-top">
-        <button class="donation-home" type="button" onclick="goHome()">🏠 Go to Home</button>
-        <h1 style="flex:1;margin:0;">Temple Donations</h1>
-      </div>
-      <p class="donation-subtitle">Support the daily poojas, rituals and essential activities of Shri Varasiddhi Vinayaka Temple.</p>
-
-      <section id="donationSection">
-        <div class="donation-card">
-          <h2>Donate for Temple Daily Activities</h2>
-          <div class="donation-upi">
-            <div>
-              <span style="display:block;font-size:.82rem;color:#716355;">Pay using any UPI app</span>
-              <strong id="upiIdText">0798062a0170493.bqr@kotak</strong>
-              <p class="donation-hint">Enter the amount in the form, pay that amount using Pay by UPI, then enter your 12-digit UPI reference/RRN.</p>
-            </div>
-          </div>
-          <p class="donation-notice" style="margin:16px 0 20px;">Keep your UPI app's transaction confirmation. Submitting the reference number records your donation details; it does not automatically verify that the payment reached the temple account.</p>
-          <form id="donationForm" novalidate>
-            <div class="donation-grid">
-              <div class="donation-field full">
-                <label for="donationAmount">Donation Amount (₹)</label>
-                <input id="donationAmount" name="donationAmount" type="number" inputmode="decimal" min="1" step="0.01" placeholder="e.g. 501.00" required>
-                <p class="donation-hint">Enter the amount you intend to donate. Pay by UPI below will use this amount.</p>
-              </div>
-              <div class="donation-field">
-                <label for="donorName">Name</label>
-                <input id="donorName" name="donorName" type="text" maxlength="100" autocomplete="name" required>
-              </div>
-              <div class="donation-field">
-                <label for="donationDate">Date of Donation</label>
-                <input id="donationDate" name="donationDate" type="date" required>
-              </div>
-              <div class="donation-field">
-                <label for="flatNumber">Flat Number</label>
-                <input id="flatNumber" name="flatNumber" type="text" readonly required>
-                <p class="donation-hint">Loaded from your resident sign-in.</p>
-              </div>
-              <div class="donation-field">
-                <label for="mobileNumber">Mobile Number</label>
-                <input id="mobileNumber" name="mobileNumber" type="tel" inputmode="numeric" maxlength="10" pattern="[6-9][0-9]{9}" autocomplete="tel" placeholder="10-digit mobile number" required>
-              </div>
-              <div class="donation-field full">
-                <label for="donationType">Donation Type</label>
-                <select id="donationType" name="donationType" required>
-                  <option value="Donate for Temple Daily Activities">Donate for Temple Daily Activities</option>
-                </select>
-              </div>
-              <div class="donation-field full">
-                <label for="utrNumber">UPI Transaction Reference / UTR</label>
-                <input id="utrNumber" name="utrNumber" type="text" inputmode="numeric" pattern="[0-9]{12}" maxlength="12" minlength="12" placeholder="Enter the 12-digit UPI reference number" autocomplete="off" required>
-                <p class="donation-hint">Enter exactly 12 digits from your UPI transaction details. This checks the format only, not payment success.</p>
-              </div>
-            </div>
-            <div class="donation-actions">
-              <a class="donation-action secondary" id="openUpiButton" href="upi://pay?pa=0798062a0170493.bqr%40kotak&amp;pn=ARVIND%20OASIS%20APARTMENTS%20OWNERS%20ASSOCIATION%20TEMPLE&amp;cu=INR">Pay by UPI</a>
-              <button id="submitDonation" class="donation-action" type="submit">Submit Donation Details</button>
-            </div>
-            <div id="formStatus" class="donation-status" role="status" aria-live="polite"></div>
-          </form>
-        </div>
-
-        <div class="donation-card">
-          <h3>Donation History for This Flat</h3>
-          <p class="donation-hint" style="margin-bottom:14px;">Only donation records associated with your signed-in flat are shown here.</p>
-          <div id="historyLoading" class="donation-empty">Loading donation history...</div>
-          <div id="historyEmpty" class="donation-empty" hidden>No donations have been submitted for this flat yet.</div>
-          <div id="historyTableWrap" class="donation-table-wrap" hidden>
-            <table class="donation-table">
-              <thead><tr><th>Date</th><th>Receipt No.</th><th>Amount</th><th>Donation Type</th><th>UPI Reference</th><th>Status</th></tr></thead>
-              <tbody id="historyRows"></tbody>
-            </table>
-          </div>
-          <div id="historyError" class="donation-status" role="status"></div>
-        </div>
-      </section>
-
-      <section id="receiptSection" hidden>
-        <div class="donation-receipt">
-          <div style="font-size:2.4rem;" aria-hidden="true">🙏</div>
-          <h2 style="margin:4px 0;">Shri Varasiddhi Vinayaka Temple</h2>
-          <p style="color:#6d5e4b;margin:0;">Donation Acknowledgement</p>
-          <div class="receipt-serial" id="receiptSerial">001</div>
-          <p style="font-weight:700;margin:0;">Receipt Number</p>
-          <div class="receipt-details">
-            <div class="receipt-detail"><span>Donor Name</span><strong id="receiptName"></strong></div>
-            <div class="receipt-detail"><span>Donation Amount</span><strong id="receiptAmount"></strong></div>
-            <div class="receipt-detail"><span>Flat Number</span><strong id="receiptFlat"></strong></div>
-            <div class="receipt-detail"><span>Mobile Number</span><strong id="receiptMobile"></strong></div>
-            <div class="receipt-detail"><span>Date</span><strong id="receiptDate"></strong></div>
-            <div class="receipt-detail"><span>Donation Type</span><strong id="receiptType"></strong></div>
-            <div class="receipt-detail"><span>UPI Reference</span><strong id="receiptUtr"></strong></div>
-          </div>
-          <p class="donation-notice" style="text-align:left;margin-top:20px;">This receipt acknowledges submission of the donation details only. The payment remains subject to verification by the Temple Committee.</p>
-          <div id="receiptStatus" class="donation-status" role="status" aria-live="polite"></div>
-          <div class="donation-actions" style="justify-content:center;">
-            <button class="donation-action" id="downloadReceiptButton" type="button">Download Receipt PDF</button>
-            <button class="donation-action secondary" id="shareReceiptButton" type="button">Share via…</button>
-            <button class="donation-action secondary" id="goBackButton" type="button" disabled>Go Back</button>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
-  <footer class="donation-footer">© Shri Varasiddhi Vinayaka Arvind Oasis Temple Committee | All Rights Reserved</footer>
-  <script>
+<link href="redesign.css" rel="stylesheet"/></head>
+<body data-area="resident" data-page="donations.html">
+<div class="donation-loader" id="pageLoader"><div class="donation-spinner"></div><div id="loaderText">Loading donation page...</div></div>
+<header class="hamburger2">
+<img alt="Temple logo" class="hlogo" src="assets/branding/logos/logo3.avif"/>
+<p>Shri Varasiddhi Vinayaka Temple</p>
+</header>
+<main class="donation-page">
+<div class="donation-wrap">
+<div class="donation-top">
+<button class="donation-home" onclick="goHome()" type="button">🏠 Go to Home</button>
+<h1 style="flex:1;margin:0;">Temple Donations</h1>
+</div>
+<p class="donation-subtitle">Support the daily poojas, rituals and essential activities of Shri Varasiddhi Vinayaka Temple.</p>
+<section id="donationSection">
+<div class="donation-card">
+<h2>Donate for Temple Daily Activities</h2>
+<div class="donation-upi">
+<div>
+<span style="display:block;font-size:.82rem;color:#716355;">Pay using any UPI app</span>
+<strong id="upiIdText">0798062a0170493.bqr@kotak</strong>
+<p class="donation-hint">Enter the amount in the form, pay that amount using Pay by UPI, then enter your 12-digit UPI reference/RRN.</p>
+</div>
+</div>
+<p class="donation-notice" style="margin:16px 0 20px;">Keep your UPI app's transaction confirmation. Submitting the reference number records your donation details; it does not automatically verify that the payment reached the temple account.</p>
+<form id="donationForm" novalidate="">
+<div class="donation-grid">
+<div class="donation-field full">
+<label for="donationAmount">Donation Amount (₹)</label>
+<input id="donationAmount" inputmode="decimal" min="1" name="donationAmount" placeholder="e.g. 501.00" required="" step="0.01" type="number"/>
+<p class="donation-hint">Enter the amount you intend to donate. Pay by UPI below will use this amount.</p>
+</div>
+<div class="donation-field">
+<label for="donorName">Name</label>
+<input autocomplete="name" id="donorName" maxlength="100" name="donorName" required="" type="text"/>
+</div>
+<div class="donation-field">
+<label for="donationDate">Date of Donation</label>
+<input id="donationDate" name="donationDate" required="" type="date"/>
+</div>
+<div class="donation-field">
+<label for="flatNumber">Flat Number</label>
+<input id="flatNumber" name="flatNumber" readonly="" required="" type="text"/>
+<p class="donation-hint">Loaded from your resident sign-in.</p>
+</div>
+<div class="donation-field">
+<label for="mobileNumber">Mobile Number</label>
+<input autocomplete="tel" id="mobileNumber" inputmode="numeric" maxlength="10" name="mobileNumber" pattern="[6-9][0-9]{9}" placeholder="10-digit mobile number" required="" type="tel"/>
+</div>
+<div class="donation-field full">
+<label for="donationType">Donation Type</label>
+<select id="donationType" name="donationType" required="">
+<option value="Donate for Temple Daily Activities">Donate for Temple Daily Activities</option>
+</select>
+</div>
+<div class="donation-field full">
+<label for="utrNumber">UPI Transaction Reference / UTR</label>
+<input autocomplete="off" id="utrNumber" inputmode="numeric" maxlength="12" minlength="12" name="utrNumber" pattern="[0-9]{12}" placeholder="Enter the 12-digit UPI reference number" required="" type="text"/>
+<p class="donation-hint">Enter exactly 12 digits from your UPI transaction details. This checks the format only, not payment success.</p>
+</div>
+</div>
+<div class="donation-actions">
+<a class="donation-action secondary" href="upi://pay?pa=0798062a0170493.bqr%40kotak&amp;pn=ARVIND%20OASIS%20APARTMENTS%20OWNERS%20ASSOCIATION%20TEMPLE&amp;cu=INR" id="openUpiButton">Pay by UPI</a>
+<button class="donation-action" id="submitDonation" type="submit">Submit Donation Details</button>
+</div>
+<div aria-live="polite" class="donation-status" id="formStatus" role="status"></div>
+</form>
+</div>
+<div class="donation-card">
+<h3>Donation History for This Flat</h3>
+<p class="donation-hint" style="margin-bottom:14px;">Only donation records associated with your signed-in flat are shown here.</p>
+<div class="donation-empty" id="historyLoading">Loading donation history...</div>
+<div class="donation-empty" hidden="" id="historyEmpty">No donations have been submitted for this flat yet.</div>
+<div class="donation-table-wrap" hidden="" id="historyTableWrap">
+<table class="donation-table">
+<thead><tr><th>Date</th><th>Receipt No.</th><th>Amount</th><th>Donation Type</th><th>UPI Reference</th><th>Status</th></tr></thead>
+<tbody id="historyRows"></tbody>
+</table>
+</div>
+<div class="donation-status" id="historyError" role="status"></div>
+</div>
+</section>
+<section hidden="" id="receiptSection">
+<div class="donation-receipt">
+<div aria-hidden="true" style="font-size:2.4rem;">🙏</div>
+<h2 style="margin:4px 0;">Shri Varasiddhi Vinayaka Temple</h2>
+<p style="color:#6d5e4b;margin:0;">Donation Acknowledgement</p>
+<div class="receipt-serial" id="receiptSerial">001</div>
+<p style="font-weight:700;margin:0;">Receipt Number</p>
+<div class="receipt-details">
+<div class="receipt-detail"><span>Donor Name</span><strong id="receiptName"></strong></div>
+<div class="receipt-detail"><span>Donation Amount</span><strong id="receiptAmount"></strong></div>
+<div class="receipt-detail"><span>Flat Number</span><strong id="receiptFlat"></strong></div>
+<div class="receipt-detail"><span>Mobile Number</span><strong id="receiptMobile"></strong></div>
+<div class="receipt-detail"><span>Date</span><strong id="receiptDate"></strong></div>
+<div class="receipt-detail"><span>Donation Type</span><strong id="receiptType"></strong></div>
+<div class="receipt-detail"><span>UPI Reference</span><strong id="receiptUtr"></strong></div>
+</div>
+<p class="donation-notice" style="text-align:left;margin-top:20px;">This receipt acknowledges submission of the donation details only. The payment remains subject to verification by the Temple Committee.</p>
+<div aria-live="polite" class="donation-status" id="receiptStatus" role="status"></div>
+<div class="donation-actions" style="justify-content:center;">
+<button class="donation-action" id="downloadReceiptButton" type="button">Download Receipt PDF</button>
+<button class="donation-action secondary" id="shareReceiptButton" type="button">Share via…</button>
+<button class="donation-action secondary" disabled="" id="goBackButton" type="button">Go Back</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<footer class="donation-footer">© Shri Varasiddhi Vinayaka Arvind Oasis Temple Committee | All Rights Reserved</footer>
+<script>
     function goHome() { window.location.href = 'main.html'; }
   </script>
-  <script type="module" src="donations.js"></script>
-</body>
+<script src="donations.js" type="module"></script>
+<script src="site-shell.js"></script></body>
 </html>

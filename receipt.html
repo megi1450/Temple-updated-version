@@ -1,14 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shri Varasiddhi Vinayaka Temple -- Receipt</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link rel="icon" href="assets/logos/logo.png">
-    <link rel="stylesheet" href="styles.css">
-    
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Registration Receipt | Shri Varasiddhi Vinayaka Temple</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link href="assets/branding/logos/logo.png" rel="icon"/>
+<link href="styles.css" rel="stylesheet"/>
+<style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -43,29 +43,28 @@
             background-color: #4cae4c;
         }
     </style>
-</head>
-<body onload="checksignin()">
-    <div id="receipt">
-        <div style="display: flex; width: 100%; align-items: center; justify-content: center;">
-            <img src="assets/logos/logo3.avif" style="height: 50px; width: 50px; right: auto; border-radius: 75px;">
-            <h2>Shri Varasiddhi Vinayaka Temple</h2>
-        </div>
-        <h3 style="margin-top: -10px;">Registration Receipt</h3>
-        <p><strong>Receipt Number:</strong> <span id="receiptNumber" style="color: red; font-weight: bold;"></span></p>
-        <p><strong>Name:</strong> <span id="name"></span></p>
-        <p><strong>Date:</strong> <span id="date"></span></p>
-        <p><strong>Flat Number:</strong> <span id="flatNumber"></span></p>
-        <p><strong>Mobile Number:</strong> <span id="mobileNumber"></span></p>
-        <p><strong>Event:</strong> <span id="event"></span></p>
-        <p><strong>Occasion:</strong> <span id="occasion"></span></p>
-    </div>
-    <p><em>This screenshot is to be shared with the Temple Committee for documentation. If you leave thsi site, your cannot get the recipt back.</em></p>
-        <p><strong>Note: </strong><em>For each event payment transaction, the same receipt number should be entered.</em></p>
-    <button id="downloadReceipt">Download Receipt</button>
-        <br>
-        <button style="background-color: #8b0000; border-radius: 10px;" onclick="gotohistory()">See History</button>
-
-    <script>
+<link href="redesign.css" rel="stylesheet"/></head>
+<body data-area="resident" data-page="receipt.html" onload="checksignin()">
+<div id="receipt">
+<div style="display: flex; width: 100%; align-items: center; justify-content: center;">
+<img src="assets/branding/logos/logo3.avif" style="height: 50px; width: 50px; right: auto; border-radius: 75px;"/>
+<h2>Shri Varasiddhi Vinayaka Temple</h2>
+</div>
+<h3 style="margin-top: -10px;">Registration Receipt</h3>
+<p><strong>Receipt Number:</strong> <span id="receiptNumber" style="color: red; font-weight: bold;"></span></p>
+<p><strong>Name:</strong> <span id="name"></span></p>
+<p><strong>Date:</strong> <span id="date"></span></p>
+<p><strong>Flat Number:</strong> <span id="flatNumber"></span></p>
+<p><strong>Mobile Number:</strong> <span id="mobileNumber"></span></p>
+<p><strong>Event:</strong> <span id="event"></span></p>
+<p><strong>Occasion:</strong> <span id="occasion"></span></p>
+</div>
+<p><em>This screenshot is to be shared with the Temple Committee for documentation. If you leave thsi site, your cannot get the recipt back.</em></p>
+<p><strong>Note: </strong><em>For each event payment transaction, the same receipt number should be entered.</em></p>
+<button id="downloadReceipt">Download Receipt</button>
+<br/>
+<button onclick="gotohistory()" style="background-color: #8b0000; border-radius: 10px;">See History</button>
+<script>
         // Get URL parameters
         const params = new URLSearchParams(window.location.search);
         document.getElementById('receiptNumber').textContent = params.get('receiptNumber');
@@ -91,6 +90,6 @@
             window.location.href="history.html";
         }
     </script>
-</body>
+<script src="site-shell.js"></script></body>
 <script src="script.js"></script>
 </html>

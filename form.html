@@ -1,12 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
-    <link rel="icon" href="assets/logos/logo.png">
-
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Puja Registration | Shri Varasiddhi Vinayaka Temple</title>
+<link href="assets/branding/logos/logo.png" rel="icon"/>
+<style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -38,36 +38,32 @@
             font-size: 16px;
         }
     </style>
-</head>
-<body onload="checksignin()">
-    <form id="registrationForm">
-        <h2>Registration Form</h2>
-        <input type="text" id="name" placeholder="Name" required>
-        <input type="date" id="date" placeholder="Select Date" required>
-        <input type="text" id="mobileNumber" placeholder="Mobile Number" required>
-        
-        <select id="event" required>
-            <option value="" disabled selected>Event...</option>
-            <option value="PANCHAMRIT ABHISHEKA">PANCHAMRIT ABHISHEKA</option>
-            <option value="NIRANTARA ABHISHEKA">NIRANTARA ABHISHEKA</option>
-            <option value="SANKASHTAHARA CHATURTHI">SANKASHTAHARA CHATURTHI</option>
-            <option value="SHRI SATYANARAYANA PUJA GROUP CEREMONY">SHRI SATYANARAYANA PUJA GROUP CEREMONY</option>
-            <option value="VEHICLE PUJA (TWO-WHEELER)">VEHICLE PUJA (TWO-WHEELER)</option>
-            <option value="VEHICLE PUJA (FOUR-WHEELER)">VEHICLE PUJA (FOUR-WHEELER)</option>
-        </select>
-
-        <select id="occasion" required>
-            <option value="" disabled selected>Occasion...</option>
-            <option value="Birthday">Birthday</option>
-            <option value="Anniversary">Anniversary</option>
-            <option value="Others">Others</option>
-        </select>
-        
-        <input type="text" id="otherOccasion" placeholder="If Others, please specify" style="display:none;">
-        <button type="submit">Submit</button>
-    </form>
-
-    <script type="module">
+<link href="redesign.css" rel="stylesheet"/></head>
+<body data-area="resident" data-page="form.html" onload="checksignin()">
+<form id="registrationForm">
+<h2>Registration Form</h2>
+<input id="name" placeholder="Name" required="" type="text"/>
+<input id="date" placeholder="Select Date" required="" type="date"/>
+<input id="mobileNumber" placeholder="Mobile Number" required="" type="text"/>
+<select id="event" required="">
+<option disabled="" selected="" value="">Event...</option>
+<option value="PANCHAMRIT ABHISHEKA">PANCHAMRIT ABHISHEKA</option>
+<option value="NIRANTARA ABHISHEKA">NIRANTARA ABHISHEKA</option>
+<option value="SANKASHTAHARA CHATURTHI">SANKASHTAHARA CHATURTHI</option>
+<option value="SHRI SATYANARAYANA PUJA GROUP CEREMONY">SHRI SATYANARAYANA PUJA GROUP CEREMONY</option>
+<option value="VEHICLE PUJA (TWO-WHEELER)">VEHICLE PUJA (TWO-WHEELER)</option>
+<option value="VEHICLE PUJA (FOUR-WHEELER)">VEHICLE PUJA (FOUR-WHEELER)</option>
+</select>
+<select id="occasion" required="">
+<option disabled="" selected="" value="">Occasion...</option>
+<option value="Birthday">Birthday</option>
+<option value="Anniversary">Anniversary</option>
+<option value="Others">Others</option>
+</select>
+<input id="otherOccasion" placeholder="If Others, please specify" style="display:none;" type="text"/>
+<button type="submit">Submit</button>
+</form>
+<script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
         import { getFirestore, setDoc, doc, serverTimestamp, getDoc, getDocs, collection } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
         
@@ -181,8 +177,6 @@
             window.location.href = `receipt.html?receiptNumber=${receiptNumber}&name=${name}&date=${date}&flatNumber=${flatNumber}&mobileNumber=${mobileNumber}&event=${event}&occasion=${occasion === "Others" ? otherOccasion : occasion}&registrationId=${registrationId}`;
         });
     </script>
-    
-    
-</body>
+<script src="site-shell.js"></script></body>
 <script src="script.js"></script>
 </html>

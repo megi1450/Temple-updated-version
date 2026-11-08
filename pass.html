@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Protected Admin Page</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="assets/logos/logo3.png">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Administration Login | Shri Varasiddhi Vinayaka Temple</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="assets/branding/logos/logo3.png" rel="icon"/>
+<style>
         body {
             font-family: 'Roboto', sans-serif;
             display: flex;
@@ -57,17 +58,15 @@
             color: #666;
         }
     </style>
-</head>
-<body onload="checksignin()">
-
+<link href="redesign.css" rel="stylesheet"/></head>
+<body class="auth-page" data-page="pass.html" onload="checksignin()">
 <div class="container">
-    <h2>Enter Admin Password</h2>
-    <input type="password" id="password" placeholder="Password" required>
-    <button onclick="pass()">Submit</button>
-    <div class="footer">Access is restricted to authorized personnel only.</div>
+<h2>Enter Admin Password</h2>
+<input id="password" placeholder="Password" required="" type="password"/>
+<button onclick="pass()">Submit</button>
+<div class="footer">Access is restricted to authorized personnel only.</div>
 </div>
-
-</body>
+<script src="site-shell.js"></script></body>
 <script src="admin.js"></script>
 <script src="script.js"></script>
 </html>

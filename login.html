@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
 
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shri Varasiddhi Vinayaka Temple -- Login</title>
-    <link rel="icon" href="assets/logos/logo.png">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shri Varasiddhi Vinayaka Temple -- Login | Shri Varasiddhi Vinayaka Temple</title>
+<link href="assets/branding/logos/logo.png" rel="icon"/>
+<style>
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(to left, #301838, #b81736);
@@ -157,26 +157,22 @@
             }
         }
     </style>
-</head>
-
-<body>
-    <div class="container">
-        <div class="greeting">
-            <h4>Welcome Back, </h4>
-        </div>
-        <img src="assets/loader/ld.gif" id="loading">
-        <form id="loginForm">
-            <input type="text" id="flatNumber" placeholder="Flat Number (e.g., A001, F1904)" required maxlength="5"
-                pattern="^([A-F])?(00[1-4]|0?[1-9]0[1-4]|1[0-9]0[1-4])$"
-                title="Valid flat: 001–004 or 101–1904 (with optional A–F block prefix)">
-            <input type="text" id="residentName" placeholder="Your Name" required>
-            <input type="email" id="email" placeholder="Email" required>
-            <p><strong>Please enter your flat number, name, and email carefully.</strong></p>
-            <button type="submit">Login</button>
-        </form>
-    </div>
-
-    <script type="module">
+<link href="redesign.css" rel="stylesheet"/></head>
+<body class="auth-page" data-page="login.html">
+<div class="container">
+<div class="greeting">
+<h4>Welcome Back, </h4>
+</div>
+<img decoding="async" id="loading" loading="lazy" src="assets/ui/loader/ld.gif"/>
+<form id="loginForm">
+<input id="flatNumber" maxlength="5" pattern="^([A-F])?(00[1-4]|0?[1-9]0[1-4]|1[0-9]0[1-4])$" placeholder="Flat Number (e.g., A001, F1904)" required="" title="Valid flat: 001–004 or 101–1904 (with optional A–F block prefix)" type="text"/>
+<input id="residentName" placeholder="Your Name" required="" type="text"/>
+<input id="email" placeholder="Email" required="" type="email"/>
+<p><strong>Please enter your flat number, name, and email carefully.</strong></p>
+<button type="submit">Login</button>
+</form>
+</div>
+<script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-app.js';
         import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/9.12.0/firebase-firestore.js';
 
@@ -242,7 +238,7 @@ if (!flatNumberPattern.test(flatNumber)) {
                         localStorage.setItem('flatNumber', flatNumber); // Store flat number
                         localStorage.setItem('residentName', residentName); // Store resident name
                         localStorage.setItem('email', email); // Store email
-                        window.location.href = 'main.html'; // Redirect to main page
+                        window.location.href = 'resident-dashboard.html'; // Redirect to main page
                     } else {
                         alert('No account found with this name and email for the given flat number.'); // Show error message
                     }
@@ -257,6 +253,5 @@ if (!flatNumberPattern.test(flatNumber)) {
             }
         });
     </script>
-</body>
-
+<script src="site-shell.js"></script></body>
 </html>

@@ -60,7 +60,7 @@ function setStatus(message, isError) {
 
 async function verifyResidentSession(flatNumber, residentName, email) {
   if (!flatNumber || localStorage.getItem('input') !== 'true' || !residentName || !email) {
-    window.location.replace('index.html');
+    window.location.replace('resident-access.html');
     return null;
   }
   const residentId = residentName.replace(/\s+/g, '_') + '_' + email;
@@ -68,7 +68,7 @@ async function verifyResidentSession(flatNumber, residentName, email) {
   const residentSnap = await getDoc(residentRef);
   if (!residentSnap.exists()) {
     localStorage.removeItem('input');
-    window.location.replace('index.html');
+    window.location.replace('resident-access.html');
     return null;
   }
   return residentSnap.data() || {};
@@ -324,7 +324,7 @@ async function initializeDonationPage() {
   const residentName = localStorage.getItem('residentName');
   const email = localStorage.getItem('email');
   if (!flatNumber || localStorage.getItem('input') !== 'true') {
-    window.location.replace('index.html');
+    window.location.replace('resident-access.html');
     return;
   }
 
