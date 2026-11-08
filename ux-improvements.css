@@ -166,3 +166,8 @@ body.auth-page .auth-language{
   }
   body.auth-page .auth-language{top:18px!important;right:14px!important;min-width:74px!important;height:36px!important;padding:0 10px!important;font-size:11px!important}
 }
+
+/* Language switching is a homepage-only feature. Hide legacy auth controls on every other route. */
+body:not(.page-main-html):not(.page-index-html) .auth-language,
+body:not(.page-main-html):not(.page-index-html) .language-button,
+body:not(.page-main-html):not(.page-index-html) [data-language-toggle]{display:none!important}

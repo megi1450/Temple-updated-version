@@ -226,3 +226,9 @@ body.auth-page{display:flex!important;flex-direction:column!important;align-item
 .site-content .modal input,.site-content .modal select,.site-content .modal textarea{width:100%;min-width:0}
 .site-content table{display:block;max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain}
 @media(max-width:680px){.site-header--admin .admin-label{display:none}.site-content .actions button{flex:1 1 auto}.site-content .modal,.site-content dialog{max-height:calc(100svh - 24px);overflow:auto}}
+
+/* Authentication cards are standalone layouts, not generic site-content sections. */
+body.auth-page main.auth-card{width:min(1160px,100%)!important;max-width:1160px!important;margin:26px auto!important;padding:0!important}
+body.auth-page main.auth-card>.auth-panel{padding:clamp(28px,4.5vw,62px)!important}
+@media(max-width:860px){body.auth-page main.auth-card>.auth-panel{padding:28px!important}}
+@media(max-width:680px){body.auth-page main.auth-card{width:100%!important;margin:14px auto!important}body.auth-page main.auth-card>.auth-panel{padding:24px 20px 28px!important}}
